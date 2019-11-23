@@ -22,7 +22,7 @@
 							<executions>
 									<execution>
 											<goals>
-													<goal>sayhi</goal>
+													<goal>generate</goal>
 											</goals>
 									</execution>
 							</executions>
