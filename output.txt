@@ -1,0 +1,288 @@
+[INFO] Scanning for projects...
+[INFO] Computing target platform for MavenProject: com.rationalinsights:rationalinsights-knime-plugin.plugin:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/pom.xml
+[INFO] Adding repository https://update.knime.org/analytics-platform/4.0
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/org/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/org/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/org/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/org/4.0/4.0.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/org/4.0/4.0.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/labs/4.0/4.0.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/ext/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/ext/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/server/4.9/4.9.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.0/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.1/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.2/ (115B)
+[INFO] Fetching p2.index from https://update.knime.org/analytics-platform/4.0/bigdata/4.0/4.0.2/ (115B)
+[INFO] Adding repository https://3d-e-chem.github.io/updates
+[INFO] Resolving dependencies of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.plugin:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/pom.xml
+[INFO] Resolving class path of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.plugin:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/pom.xml
+[INFO] Computing target platform for MavenProject: com.rationalinsights:rationalinsights-knime-plugin.feature:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/pom.xml
+[INFO] Resolving dependencies of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.feature:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/pom.xml
+[INFO] Resolving class path of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.feature:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/pom.xml
+[INFO] Computing target platform for MavenProject: com.rationalinsights:rationalinsights-knime-plugin.p2:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/pom.xml
+[INFO] Resolving dependencies of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.p2:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/pom.xml
+[INFO] Resolving class path of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.p2:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/pom.xml
+[INFO] Computing target platform for MavenProject: com.rationalinsights:rationalinsights-knime-plugin.tests:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/pom.xml
+[INFO] Resolving dependencies of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.tests:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/pom.xml
+[INFO] Resolving class path of MavenProject: com.rationalinsights:rationalinsights-knime-plugin.tests:1.0.0-SNAPSHOT @ /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/pom.xml
+[WARNING] The project com.rationalinsights:rationalinsights-knime-plugin:pom:1.0.0-SNAPSHOT uses prerequisites which is only intended for maven-plugin projects but not for non maven-plugin projects. For such purposes you should use the maven-enforcer-plugin. See https://maven.apache.org/enforcer/enforcer-rules/requireMavenVersion.html
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] rationalinsights-knime-plugin                                      [pom]
+[INFO] rationalinsights-code-gen-manve-plugin                    [maven-plugin]
+[INFO] rationalinsights-knime-plugin.plugin                    [eclipse-plugin]
+[INFO] rationalinsights-knime-plugin.feature                  [eclipse-feature]
+[INFO] rationalinsights-knime-plugin.p2                    [eclipse-repository]
+[INFO] rationalinsights-knime-plugin.tests                [eclipse-test-plugin]
+[INFO] rationalinsights-knime-plugin.targetplatform                       [pom]
+[INFO] 
+[INFO] ---------< com.rationalinsights:rationalinsights-knime-plugin >---------
+[INFO] Building rationalinsights-knime-plugin 1.0.0-SNAPSHOT              [1/7]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin ---
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin ---
+[INFO] 
+[INFO] -------------------< sample.plugin:ri-maven-plugin >--------------------
+[INFO] Building rationalinsights-code-gen-manve-plugin 1.0-SNAPSHOT       [2/7]
+[INFO] ----------------------------[ maven-plugin ]----------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ ri-maven-plugin ---
+[INFO] Deleting /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/ri-maven-plugin/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ ri-maven-plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ ri-maven-plugin ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/ri-maven-plugin/target/classes
+[INFO] 
+[INFO] --- maven-plugin-plugin:3.2:descriptor (default-descriptor) @ ri-maven-plugin ---
+[INFO] Using 'UTF-8' encoding to read mojo metadata.
+[INFO] Applying mojo extractor for language: java
+[INFO] Mojo extractor for language: java found 0 mojo descriptors.
+[INFO] Applying mojo extractor for language: bsh
+[INFO] Mojo extractor for language: bsh found 0 mojo descriptors.
+[INFO] Applying mojo extractor for language: java-annotations
+[INFO] Mojo extractor for language: java-annotations found 1 mojo descriptors.
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ ri-maven-plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/ri-maven-plugin/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ ri-maven-plugin ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ ri-maven-plugin ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ ri-maven-plugin ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ ri-maven-plugin ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/ri-maven-plugin/target/ri-maven-plugin-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-plugin-plugin:3.2:addPluginArtifactMetadata (default-addPluginArtifactMetadata) @ ri-maven-plugin ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ ri-maven-plugin ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ ri-maven-plugin ---
+[INFO] 
+[INFO] -----< com.rationalinsights:rationalinsights-knime-plugin.plugin >------
+[INFO] Building rationalinsights-knime-plugin.plugin 1.0.0-SNAPSHOT       [3/7]
+[INFO] ---------------------------[ eclipse-plugin ]---------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin.plugin ---
+[INFO] Deleting /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:build-qualifier (default-build-qualifier) @ rationalinsights-knime-plugin.plugin ---
+[INFO] The project's OSGi version is 1.0.0.201911232028
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-id (default-validate-id) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-version (default-validate-version) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ rationalinsights-knime-plugin.plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/src/main/resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:1.4.0:compile (default-compile) @ rationalinsights-knime-plugin.plugin ---
+[WARNING] Parameter 'useProjectSettings' is set to true, but preferences file '/Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/.settings/org.eclipse.jdt.core.prefs' could not be found!
+[INFO] Compiling 16 source files to /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ rationalinsights-knime-plugin.plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/src/test/resources
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin.plugin ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/target/rationalinsights-knime-plugin.plugin-1.0.0-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- target-platform-configuration:1.4.0:target-platform (default-target-platform) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:package-plugin (default-package-plugin) @ rationalinsights-knime-plugin.plugin ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/plugin/target/rationalinsights-knime-plugin.plugin-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata-default (default-p2-metadata-default) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin.plugin ---
+[INFO] 
+[INFO] -----< com.rationalinsights:rationalinsights-knime-plugin.feature >-----
+[INFO] Building rationalinsights-knime-plugin.feature 1.0.0-SNAPSHOT      [4/7]
+[INFO] --------------------------[ eclipse-feature ]---------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin.feature ---
+[INFO] Deleting /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:build-qualifier-aggregator (default-build-qualifier-aggregator) @ rationalinsights-knime-plugin.feature ---
+[INFO] The project's OSGi version is 1.0.0.201911232028
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-id (default-validate-id) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-version (default-validate-version) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- target-platform-configuration:1.4.0:target-platform (default-target-platform) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:package-feature (default-package-feature) @ rationalinsights-knime-plugin.feature ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/target/rationalinsights-knime-plugin.feature-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata-default (default-p2-metadata-default) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:feature-p2-metadata (default-feature-p2-metadata) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin.feature ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/feature/target/rationalinsights-knime-plugin.feature-1.0.0-SNAPSHOT-sources-feature.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin.feature ---
+[INFO] 
+[INFO] -------< com.rationalinsights:rationalinsights-knime-plugin.p2 >--------
+[INFO] Building rationalinsights-knime-plugin.p2 1.0.0-SNAPSHOT           [5/7]
+[INFO] -------------------------[ eclipse-repository ]-------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin.p2 ---
+[INFO] Deleting /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:build-qualifier-aggregator (default-build-qualifier-aggregator) @ rationalinsights-knime-plugin.p2 ---
+[INFO] The project's OSGi version is 1.0.0.201911232028
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean-1) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ rationalinsights-knime-plugin.p2 ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/src/main/resources
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- target-platform-configuration:1.4.0:target-platform (default-target-platform) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:1.4.0:publish-osgi-ee (default-publish-osgi-ee) @ rationalinsights-knime-plugin.p2 ---
+[INFO] Published profile IUs: [a.jre.javase 10.0.0, config.a.jre.javase 10.0.0]
+[INFO] Published profile IUs: [a.jre.javase 11.0.0, config.a.jre.javase 11.0.0]
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:1.4.0:publish-products (default-publish-products) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:1.4.0:publish-categories (default-publish-categories) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-publisher-plugin:1.4.0:attach-artifacts (default-attach-artifacts) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-repository-plugin:1.4.0:assemble-repository (default-assemble-repository) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-repository-plugin:1.4.0:archive-repository (default-archive-repository) @ rationalinsights-knime-plugin.p2 ---
+[INFO] Building zip: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/p2/target/rationalinsights-knime-plugin.p2-1.0.0-SNAPSHOT.zip
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin.p2 ---
+[INFO] 
+[INFO] ------< com.rationalinsights:rationalinsights-knime-plugin.tests >------
+[INFO] Building rationalinsights-knime-plugin.tests 1.0.0-SNAPSHOT        [6/7]
+[INFO] ------------------------[ eclipse-test-plugin ]-------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin.tests ---
+[INFO] Deleting /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/target
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:build-qualifier (default-build-qualifier) @ rationalinsights-knime-plugin.tests ---
+[INFO] The project's OSGi version is 1.0.0.201911232028
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-id (default-validate-id) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:validate-version (default-validate-version) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --- jacoco-maven-plugin:0.8.4:prepare-agent (default) @ rationalinsights-knime-plugin.tests ---
+[INFO] tycho.testArgLine set to -javaagent:/Users/aleksandr/.m2/repository/org/jacoco/org.jacoco.agent/0.8.4/org.jacoco.agent-0.8.4-runtime.jar=destfile=/Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/target/jacoco.exec
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ rationalinsights-knime-plugin.tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/src/main/resources
+[INFO] 
+[INFO] --- tycho-compiler-plugin:1.4.0:compile (default-compile) @ rationalinsights-knime-plugin.tests ---
+[WARNING] Parameter 'useProjectSettings' is set to true, but preferences file '/Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/.settings/org.eclipse.jdt.core.prefs' could not be found!
+[INFO] Compiling 3 source files to /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ rationalinsights-knime-plugin.tests ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/src/test/resources
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin.tests ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/target/rationalinsights-knime-plugin.tests-1.0.0-SNAPSHOT-sources.jar
+[INFO] 
+[INFO] --- target-platform-configuration:1.4.0:target-platform (default-target-platform) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --- tycho-packaging-plugin:1.4.0:package-plugin (default-package-plugin) @ rationalinsights-knime-plugin.tests ---
+[INFO] Building jar: /Users/aleksandr/Projects/java/knime-plugin/knime-ri-python-nodes-extension/tests/target/rationalinsights-knime-plugin.tests-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata-default (default-p2-metadata-default) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin.tests ---
+[INFO] 
+[INFO] --< com.rationalinsights:rationalinsights-knime-plugin.targetplatform >--
+[INFO] Building rationalinsights-knime-plugin.targetplatform 1.0.0-SNAPSHOT [7/7]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ rationalinsights-knime-plugin.targetplatform ---
+[INFO] 
+[INFO] --- tycho-source-plugin:1.4.0:plugin-source (attach-source) @ rationalinsights-knime-plugin.targetplatform ---
+[INFO] 
+[INFO] --- tycho-source-feature-plugin:1.4.0:source-feature (source-feature) @ rationalinsights-knime-plugin.targetplatform ---
+[INFO] 
+[INFO] --- tycho-p2-plugin:1.4.0:p2-metadata (attach-p2-metadata) @ rationalinsights-knime-plugin.targetplatform ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] rationalinsights-knime-plugin 1.0.0-SNAPSHOT ....... SUCCESS [  0.094 s]
+[INFO] rationalinsights-code-gen-manve-plugin 1.0-SNAPSHOT  SUCCESS [  2.050 s]
+[INFO] rationalinsights-knime-plugin.plugin 1.0.0-SNAPSHOT  SUCCESS [  2.663 s]
+[INFO] rationalinsights-knime-plugin.feature 1.0.0-SNAPSHOT SUCCESS [  0.400 s]
+[INFO] rationalinsights-knime-plugin.p2 1.0.0-SNAPSHOT .... SUCCESS [  2.414 s]
+[INFO] rationalinsights-knime-plugin.tests 1.0.0-SNAPSHOT . SUCCESS [  0.694 s]
+[INFO] rationalinsights-knime-plugin.targetplatform 1.0.0-SNAPSHOT SUCCESS [  0.008 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  47.510 s
+[INFO] Finished at: 2019-11-23T22:29:21+02:00
+[INFO] ------------------------------------------------------------------------
