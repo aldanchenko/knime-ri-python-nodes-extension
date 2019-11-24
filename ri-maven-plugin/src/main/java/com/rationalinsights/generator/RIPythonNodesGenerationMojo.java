@@ -37,7 +37,9 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         }
 
         File nodesJsonFile = new File(nodesJsonPath);
-        log.info(nodesJsonFile.getAbsolutePath());
+
+        log.info("Nodes json file path: " + nodesJsonFile.getAbsolutePath());
+
         if (!nodesJsonFile.exists()) {
             throw new MojoExecutionException("Can't find nodes.json");
         }

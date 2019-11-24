@@ -6,8 +6,8 @@
       <category
             description="Category containing my nodes"
             icon="com/rationalinsights/default.png"
-            level-id="HelloWorldRationalInsights"
-            name="HelloWorldRationalInsights"
+            level-id="RationalInsightsPythonNodesExtension"
+            name="RationalInsightsPythonNodesExtension"
             path="/community/3d-e-chem"/>
    </extension>
 

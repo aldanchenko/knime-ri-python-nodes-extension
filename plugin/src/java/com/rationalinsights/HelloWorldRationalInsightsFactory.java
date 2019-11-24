@@ -5,7 +5,7 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeFactory</code> for the "HelloWorldRationalInsights" Node.
+ * <code>NodeFactory</code> for the "RationalInsightsPythonNodesExtension" Node.
  *
  */
 public class HelloWorldRationalInsightsFactory

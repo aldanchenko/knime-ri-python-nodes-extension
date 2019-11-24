@@ -13,7 +13,7 @@ import org.knime.core.node.port.PortObjectSpec;
 import nl.esciencecenter.e3dchem.python.PythonOptionsPanel;
 
 /**
- * <code>NodeDialog</code> for the "HelloWorldRationalInsights" Node.
+ * <code>NodeDialog</code> for the "RationalInsightsPythonNodesExtension" Node.
  *
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
  * creation of a simple dialog with standard components. If you need a more
@@ -25,7 +25,7 @@ public class HelloWorldRationalInsightsDialog extends DefaultNodeSettingsPane {
 	HelloWorldRationalInsightsConfig config;
 
     /**
-     * New pane for configuring HelloWorldRationalInsights node dialog.
+     * New pane for configuring RationalInsightsPythonNodesExtension node dialog.
      * This is just a suggestion to demonstrate possible default dialog
      * components.
      */

@@ -3,7 +3,7 @@ package com.rationalinsights;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeView</code> for the "HelloWorldRationalInsights" Node.
+ * <code>NodeView</code> for the "RationalInsightsPythonNodesExtension" Node.
  *
  */
 public class HelloWorldRationalInsightsView extends NodeView<HelloWorldRationalInsightsModel> {
@@ -11,7 +11,7 @@ public class HelloWorldRationalInsightsView extends NodeView<HelloWorldRationalI
     /**
      * Creates a new view.
      *
-     * @param nodeModel The model (class: {@link HelloWorldRationalInsightsModel})
+     * @param nodeModel The model (class: {@link RationalInsightsPythonNodesExtension})
      */
     protected HelloWorldRationalInsightsView(final HelloWorldRationalInsightsModel nodeModel) {
         super(nodeModel);

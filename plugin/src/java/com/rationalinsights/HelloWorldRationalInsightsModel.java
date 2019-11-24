@@ -12,7 +12,7 @@ import org.knime.core.node.port.PortType;
 import nl.esciencecenter.e3dchem.python.PythonWrapperNodeModel;
 
 /**
- * This is the model implementation of HelloWorldRationalInsights.
+ * This is the model implementation of RationalInsightsPythonNodesExtension.
  *
  */
 public class HelloWorldRationalInsightsModel extends PythonWrapperNodeModel<HelloWorldRationalInsightsConfig> {
