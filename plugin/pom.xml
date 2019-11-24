@@ -18,7 +18,10 @@
 				<plugin>
 							<groupId>com.rationalinsights</groupId>
 							<artifactId>ri-maven-plugin</artifactId>
-							<version>1.0-SNAPSHOT</version>
+							<version>1.0.0-SNAPSHOT</version>
+							<configuration>
+								<nodesJsonPath>nodes.json</nodesJsonPath>
+							</configuration>
 							<executions>
 									<execution>
 											<goals>
