@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rationalinsights.generator.model.Node;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
@@ -41,13 +42,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             throw new MojoExecutionException("Can't find nodes.json");
         }
 
-        Gson gson = new GsonBuilder().create();
-
         try {
+            Gson gson = new GsonBuilder().create();
             JsonReader jsonReader = new JsonReader(new FileReader(nodesJsonFile));
 
             Type listType = new TypeToken<ArrayList<Node>>(){}.getType();
-            List<Node> nodes = new Gson().fromJson(jsonReader, listType);
+            List<Node> nodes = gson.fromJson(jsonReader, listType);
 
             if (Objects.isNull(nodes) || nodes.size() == 0) {
                 throw new MojoExecutionException("Nodes information is empty.");

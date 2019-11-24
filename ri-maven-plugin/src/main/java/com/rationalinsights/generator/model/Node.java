@@ -1,28 +1,18 @@
-package com.rationalinsights.generator;
+package com.rationalinsights.generator.model;
 
 import java.util.List;
 
-//"Rationalinsights.Models.InputNode1": {
-//        'icon_path'          : 'Path to node icon',
-//        'python_script_path' :'Path to Python Script',
-
-//        'input'              : {
-//        'InputTable1' :'Description of InputTable1',
-//        'InputTable2' :'Description of InputTable2'
-//        },
-
-//        'output'             : {
-//        'OutputTable1' : 'Description of OutputTable1'
-//        'OutputTable2' :'Description of OutputTable2'
-//        },
+/**
+ * Rationalinsights Knime node description (handler).
+ */
 public class Node {
     private String organization;
     private String catalog;
     private String name;
     private String iconPath;
     private String pythonScriptPath;
-    private List<String> inputList;
-    private List<String> outputList;
+    private List<InPort> inPorts;
+    private List<OutPort> outPorts;
 
     public String getOrganization() {
         return organization;
@@ -64,19 +54,19 @@ public class Node {
         this.pythonScriptPath = pythonScriptPath;
     }
 
-    public List<String> getInputList() {
-        return inputList;
+    public List<InPort> getInPorts() {
+        return inPorts;
     }
 
-    public void setInputList(List<String> inputList) {
-        this.inputList = inputList;
+    public void setInPorts(List<InPort> inPorts) {
+        this.inPorts = inPorts;
     }
 
-    public List<String> getOutputList() {
-        return outputList;
+    public List<OutPort> getOutPorts() {
+        return outPorts;
     }
 
-    public void setOutputList(List<String> outputList) {
-        this.outputList = outputList;
+    public void setOutPorts(List<OutPort> outPorts) {
+        this.outPorts = outPorts;
     }
 }

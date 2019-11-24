@@ -1,16 +1,48 @@
 [
   {
-    "organization": "",
-    "catalog": "",
+    "organization": "Rationalinsights",
+    "catalog": "Display",
     "name": "PythonNode1",
-    "iconPath": "",
-    "pythonScriptPath": ""
+    "iconPath": "../icons/html_dev.png",
+    "pythonScriptPath": "../python_scripts/hello_world_1.py",
+    "inputList": [
+      {
+        "name": "inPort1",
+        "description": "inPort1 desc"
+      },
+      {
+        "name": "outPort2",
+        "description": "outPort2 desc"
+      }
+    ],
+    "outputList": [
+      {
+        "name": "outPort2",
+        "description": "inPort2 desc"
+      },
+      {
+        "name": "outPort2",
+        "description": "outPort2 desc"
+      }
+    ]
   },
   {
-    "organization": "",
-    "catalog": "",
+    "organization": "Rationalinsights",
+    "catalog": "Models",
     "name": "PythonNode2",
-    "iconPath": "",
-    "pythonScriptPath": ""
-  },
+    "iconPath": "../icons/chrome_dev.png",
+    "pythonScriptPath": "../python_scripts/hello_world_2.py",
+    "inputList": [
+      {
+        "name": "inPort1",
+        "description": "inPort1 desc"
+      }
+    ],
+    "outputList": [
+      {
+        "name": "outPort2",
+        "description": "inPort2 desc"
+      }
+    ]
+  }
 ]
