@@ -1,6 +1,8 @@
 package com.rationalinsights.generator;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -9,9 +11,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,12 +41,13 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             throw new MojoExecutionException("Can't find nodes.json");
         }
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().create();
 
         try {
             JsonReader jsonReader = new JsonReader(new FileReader(nodesJsonFile));
 
-            List<Node> nodes = gson.fromJson(jsonReader, List.class);
+            Type listType = new TypeToken<ArrayList<Node>>(){}.getType();
+            List<Node> nodes = new Gson().fromJson(jsonReader, listType);
 
             if (Objects.isNull(nodes) || nodes.size() == 0) {
                 throw new MojoExecutionException("Nodes information is empty.");
