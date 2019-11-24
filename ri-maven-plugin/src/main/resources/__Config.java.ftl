@@ -10,7 +10,7 @@ import org.knime.core.node.workflow.FlowVariable;
 
 import nl.esciencecenter.e3dchem.python.PythonWrapperNodeConfig;
 
-public class HelloWorldRationalInsightsConfig extends PythonWrapperNodeConfig {
+public class ${nodeName}Config extends PythonWrapperNodeConfig {
     /** the settings key which is used to retrieve and
         store the settings (from the dialog or from a settings file)
        (package visibility to be usable from the dialog). */
@@ -23,20 +23,20 @@ public class HelloWorldRationalInsightsConfig extends PythonWrapperNodeConfig {
     // and used in the models execution method. The default components of the
     // dialog work with "SettingsModels".
     private final SettingsModelIntegerBounded m_count =
-        new SettingsModelIntegerBounded(HelloWorldRationalInsightsConfig.CFGKEY_COUNT,
-                    HelloWorldRationalInsightsConfig.DEFAULT_COUNT,
+        new SettingsModelIntegerBounded(${nodeName}Config.CFGKEY_COUNT,
+                    ${nodeName}Config.DEFAULT_COUNT,
                     Integer.MIN_VALUE, Integer.MAX_VALUE);
 
-    public HelloWorldRationalInsightsConfig(String[] inputTables, String[] outputTables) {
+    public ${nodeName}Config(String[] inputTables, String[] outputTables) {
 		super(inputTables, outputTables);
 		// this Python package will be checked before executing the node
-		addRequiredModule("pandas");
+		//addRequiredModule("pandas");
 	}
 
-	public HelloWorldRationalInsightsConfig() {
+	public ${nodeName}Config() {
 		super();
 		// this Python package will be checked before executing the node
-		addRequiredModule("pandas");
+		//addRequiredModule("pandas");
 	}
 
     @Override

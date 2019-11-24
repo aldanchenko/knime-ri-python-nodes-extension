@@ -15,19 +15,19 @@ import nl.esciencecenter.e3dchem.python.PythonWrapperNodeModel;
  * This is the model implementation of RationalInsightsPythonNodesExtension.
  *
  */
-public class HelloWorldRationalInsightsModel extends PythonWrapperNodeModel<HelloWorldRationalInsightsConfig> {
+public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> {
     /**
      * Constructor for the node model.
      */
-    protected HelloWorldRationalInsightsModel() {
+    protected ${nodeName}Model() {
         // TODO one incoming port and one outgoing port is assumed
         super(new PortType[] { BufferedDataTable.TYPE }, new PortType[] { BufferedDataTable.TYPE });
-        python_code_filename = "hello_world.py";
+        python_code_filename = "${pythonScript}";
     }
 
     @Override
-    protected HelloWorldRationalInsightsConfig createConfig() {
-        return new HelloWorldRationalInsightsConfig();
+    protected ${nodeName}Config createConfig() {
+        return new ${nodeName}Config();
     }
 
     @Override

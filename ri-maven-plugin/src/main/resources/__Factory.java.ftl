@@ -8,15 +8,15 @@ import org.knime.core.node.NodeView;
  * <code>NodeFactory</code> for the "RationalInsightsPythonNodesExtension" Node.
  *
  */
-public class HelloWorldRationalInsightsFactory
-        extends NodeFactory<HelloWorldRationalInsightsModel> {
+public class ${nodeName}Factory
+        extends NodeFactory<${nodeName}Model> {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public HelloWorldRationalInsightsModel createNodeModel() {
-        return new HelloWorldRationalInsightsModel();
+    public ${nodeName}Model createNodeModel() {
+        return new ${nodeName}Model();
     }
 
     /**
@@ -31,9 +31,9 @@ public class HelloWorldRationalInsightsFactory
      * {@inheritDoc}
      */
     @Override
-    public NodeView<HelloWorldRationalInsightsModel> createNodeView(final int viewIndex,
-            final HelloWorldRationalInsightsModel nodeModel) {
-        return new HelloWorldRationalInsightsView(nodeModel);
+    public NodeView<${nodeName}Model> createNodeView(final int viewIndex,
+            final ${nodeName}Model nodeModel) {
+        return new ${nodeName}View(nodeModel);
     }
 
     /**
@@ -49,7 +49,7 @@ public class HelloWorldRationalInsightsFactory
      */
     @Override
     public NodeDialogPane createNodeDialogPane() {
-        return new HelloWorldRationalInsightsDialog();
+        return new ${nodeName}Dialog();
     }
 
 }

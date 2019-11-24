@@ -36,12 +36,118 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         List<Node> nodes = loadNodes();
 
+        for (Node node : nodes) {
+            generateNodeConfigJavaFile(node);
+            generateNodeDialogJavaFile(node);
+            generateNodeFactoryJavaFile(node);
+            generateNodeModelJavaFile(node);
+            generateNodeViewJavaFile(node);
+            generateNodeFactoryXmlFile(node);
+        }
+
+        log.info("End generate Nodes.");
+    }
+
+    /**
+     * TODO:
+     *
+     * @param node  -
+     *
+     * @throws MojoExecutionException -
+     */
+    private void generateNodeFactoryXmlFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node Factory Xml File.");
+
         Map<String, Object> templateParametersMap = new HashMap<>();
 
-        templateParametersMap.put("title", "Vogella example");
+        templateParametersMap.put("nodeName", node.getName());
+        templateParametersMap.put("shortDescription", node.getShortDescription());
+        templateParametersMap.put("fullDescription", node.getFullDescription());
+
+        Template template = getTemplate("__Factory.xml.ftl");
+
+        saveTemplateResult(template, templateParametersMap, node.getName() + "Factory.xml");
+
+        getLog().info("End generate Node Factory Xml File.");
+    }
+
+    private void generateNodeViewJavaFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node View Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+        templateParametersMap.put("nodeName", node.getName());
+
+        Template template = getTemplate("__View.java.ftl");
+
+        saveTemplateResult(template, templateParametersMap, node.getName() + "View.java");
+
+        getLog().info("End generate Node View Java File.");
+    }
+
+    private void generateNodeModelJavaFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node Model Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+
+        templateParametersMap.put("nodeName", node.getName());
+        templateParametersMap.put("pythonScript", node.getPythonScriptPath());
+
+        Template template = getTemplate("__Model.java.ftl");
+
+        saveTemplateResult(template, templateParametersMap, node.getName() + "Model.java");
+
+        getLog().info("End generate Node Model Java File.");
+    }
+
+    private void generateNodeFactoryJavaFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node Factory Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+        templateParametersMap.put("nodeName", node.getName());
+
+        Template template = getTemplate("__Factory.java.ftl");
+
+        saveTemplateResult(template, templateParametersMap, node.getName() + "Factory.java");
+
+        getLog().info("End generate Node Factory Java File.");
+    }
+
+    private void generateNodeDialogJavaFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node Dialog Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+        templateParametersMap.put("nodeName", node.getName());
+
+        Template template = getTemplate("__Dialog.java.ftl");
+
+        saveTemplateResult(template, templateParametersMap, node.getName() + "Dialog.java");
+
+        getLog().info("End generate Node Dialog Java File.");
+    }
+
+    private void generateNodeConfigJavaFile(Node node) throws MojoExecutionException {
+        getLog().info("Start generate Node Config Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+        templateParametersMap.put("nodeName", node.getName());
 
         Template template = getTemplate("__Config.java.ftl");
 
+        saveTemplateResult(template, templateParametersMap, node.getName() + "Config.java");
+
+        getLog().info("End generate Node Config Java File.");
+    }
+
+    /**
+     * Generate result from template, display in console and save to file.
+     *
+     * @param template                  - source template
+     * @param templateParametersMap     - template parameters map
+     * @param outputFileName            - output file name
+     *
+     * @throws MojoExecutionException   -
+     */
+    private void saveTemplateResult(Template template, Map<String, Object> templateParametersMap, String outputFileName) throws MojoExecutionException {
         Writer consoleWriter = new OutputStreamWriter(System.out);
 
         try {
@@ -50,7 +156,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             throw new MojoExecutionException("Can't process Knime java template.");
         }
 
-        Writer fileWriter = null;
+        Writer fileWriter;
 
         try {
             fileWriter = new FileWriter(new File("output.html"));
@@ -65,14 +171,20 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         } finally {
             try {
                 fileWriter.close();
-            } catch (IOException e) {
-                throw new MojoExecutionException("Can't save template generation results.");
+            } catch (IOException ignored) {
             }
         }
-
-        log.info("End generate Nodes.");
     }
 
+    /**
+     * Get Freemarker template instance by template name.
+     *
+     * @param templateName  - source template name
+     *
+     * @throws MojoExecutionException -
+     *
+     * @return Template
+     */
     private Template getTemplate(String templateName) throws MojoExecutionException {
         Configuration configuration = new Configuration(); // FIXME: replace with new implementation.
 

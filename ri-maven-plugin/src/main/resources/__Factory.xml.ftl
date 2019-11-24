@@ -2,14 +2,14 @@
 <knimeNode icon="./default.png" type="Manipulator"
 	xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://knime.org/node/v2.10 http://knime.org/node/v2.10.xsd">
-	<name>HelloWorldRationalInsights</name>
+	<name>${nodeName}</name>
 
 	<shortDescription>
-		[Enter short description here.]
+		${shortDescription}
 	</shortDescription>
 
 	<fullDescription>
-		<intro>[Enter long description here.]</intro>
+		<intro>${fullDescription}</intro>
 
 
 		<option name="Counter">description of first option</option>
