@@ -40,6 +40,42 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         List<Node> nodes = loadNodes();
 
+         File generationResultsDir = getGenerationResultsDirectory();
+
+        for (Node node : nodes) {
+            File nodePackageDirectory = createNodePackageDirectory(generationResultsDir, node);
+
+            generateNodeConfigJavaFile(node, nodePackageDirectory);
+            generateNodeDialogJavaFile(node, nodePackageDirectory);
+            generateNodeFactoryJavaFile(node, nodePackageDirectory);
+            generateNodeModelJavaFile(node, nodePackageDirectory);
+            generateNodeViewJavaFile(node, nodePackageDirectory);
+            generateNodeFactoryXmlFile(node, nodePackageDirectory);
+        }
+
+        log.info("End generate Nodes.");
+    }
+
+    private File createNodePackageDirectory(File generationResultsDir, Node node) {
+        File nodePackageDirectory = new File(generationResultsDir, node.getName().toLowerCase());
+
+        if (nodePackageDirectory.exists()) {
+            nodePackageDirectory.delete();
+        }
+
+        nodePackageDirectory.mkdir();
+
+        return nodePackageDirectory;
+    }
+
+    /**
+     * Get directory by {@link #generationResultsDirPath}.
+     *
+     * @throws MojoExecutionException -
+     *
+     * @return File
+     */
+    private File getGenerationResultsDirectory() throws MojoExecutionException {
         if (Objects.isNull(generationResultsDirPath) || generationResultsDirPath.length() == 0) {
             throw new MojoExecutionException("Can't find generation node results directory path.");
         }
@@ -50,16 +86,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             throw new MojoExecutionException("Can't find generation node results directory path.");
         }
 
-        for (Node node : nodes) {
-            generateNodeConfigJavaFile(node);
-            generateNodeDialogJavaFile(node);
-            generateNodeFactoryJavaFile(node);
-            generateNodeModelJavaFile(node);
-            generateNodeViewJavaFile(node);
-            generateNodeFactoryXmlFile(node);
-        }
-
-        log.info("End generate Nodes.");
+        return generationResultsDir;
     }
 
     /**
@@ -67,9 +94,10 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node  -
      *
+     * @param nodePackageDirectory
      * @throws MojoExecutionException -
      */
-    private void generateNodeFactoryXmlFile(Node node) throws MojoExecutionException {
+    private void generateNodeFactoryXmlFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Xml File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -80,12 +108,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__Factory.xml.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "Factory.xml");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Factory.xml"));
 
         getLog().info("End generate Node Factory Xml File.");
     }
 
-    private void generateNodeViewJavaFile(Node node) throws MojoExecutionException {
+    private void generateNodeViewJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node View Java File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -93,12 +121,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__View.java.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "View.java");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "View.java"));
 
         getLog().info("End generate Node View Java File.");
     }
 
-    private void generateNodeModelJavaFile(Node node) throws MojoExecutionException {
+    private void generateNodeModelJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Model Java File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -108,12 +136,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__Model.java.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "Model.java");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Model.java"));
 
         getLog().info("End generate Node Model Java File.");
     }
 
-    private void generateNodeFactoryJavaFile(Node node) throws MojoExecutionException {
+    private void generateNodeFactoryJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Java File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -121,12 +149,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__Factory.java.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "Factory.java");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Factory.java"));
 
         getLog().info("End generate Node Factory Java File.");
     }
 
-    private void generateNodeDialogJavaFile(Node node) throws MojoExecutionException {
+    private void generateNodeDialogJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Dialog Java File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -134,12 +162,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__Dialog.java.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "Dialog.java");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Dialog.java"));
 
         getLog().info("End generate Node Dialog Java File.");
     }
 
-    private void generateNodeConfigJavaFile(Node node) throws MojoExecutionException {
+    private void generateNodeConfigJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Config Java File.");
 
         Map<String, Object> templateParametersMap = new HashMap<>();
@@ -147,9 +175,13 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Template template = getTemplate("__Config.java.ftl");
 
-        saveTemplateResult(template, templateParametersMap, node.getName() + "Config.java");
+        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Config.java"));
 
         getLog().info("End generate Node Config Java File.");
+    }
+
+    private void saveTemplateResult(Template template, Map<String, Object> templateParametersMap, String resultFile) throws MojoExecutionException {
+
     }
 
     /**
@@ -157,11 +189,11 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param template                  - source template
      * @param templateParametersMap     - template parameters map
-     * @param outputFileName            - output file name
+     * @param resultFile                - output file
      *
      * @throws MojoExecutionException   -
      */
-    private void saveTemplateResult(Template template, Map<String, Object> templateParametersMap, String outputFileName) throws MojoExecutionException {
+    private void saveTemplateResult(Template template, Map<String, Object> templateParametersMap, File resultFile) throws MojoExecutionException {
         Writer consoleWriter = new OutputStreamWriter(System.out);
 
         try {
@@ -173,7 +205,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         Writer fileWriter;
 
         try {
-            fileWriter = new FileWriter(new File("output.html"));
+            fileWriter = new FileWriter(resultFile);
         } catch (IOException e) {
             throw new MojoExecutionException("Can't save template generation results.");
         }
