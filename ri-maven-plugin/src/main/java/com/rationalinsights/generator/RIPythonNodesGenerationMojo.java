@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rationalinsights.generator.knime.Extension;
+import com.rationalinsights.generator.knime.KnimeNode;
 import com.rationalinsights.generator.knime.KnimePlugin;
 import com.rationalinsights.generator.model.Node;
 import freemarker.template.Configuration;
@@ -19,6 +21,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.lang.reflect.Type;
@@ -62,7 +65,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             generateNodeFactoryXmlFile(node, nodePackageDirectory);
         }
 
-        updatePluginXml(pluginXmlFile);
+        updatePluginXml(pluginXmlFile, nodes);
 
         log.info("End generate Nodes.");
     }
@@ -92,16 +95,36 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      * TODO: method under construction.
      *
      * @param pluginXmlFile
+     * @param nodes
      * @throws MojoExecutionException
      */
-    private void updatePluginXml(File pluginXmlFile) throws MojoExecutionException {
+    private void updatePluginXml(File pluginXmlFile, List<Node> nodes) throws MojoExecutionException {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(KnimePlugin.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
             KnimePlugin knimePlugin = (KnimePlugin) jaxbUnmarshaller.unmarshal(pluginXmlFile);
 
-            System.out.println(knimePlugin);
+            for (Extension extension : knimePlugin.getExtensions()) {
+                if (extension.isNodesExtension()) {
+                    extension.setNodes(new ArrayList<>());
+
+                    for (Node node : nodes) {
+                        KnimeNode knimeNode = new KnimeNode();
+
+                        knimeNode.setCategoryPath("/community/3d-e-chem/HelloWorldRationalInsights");
+                        knimeNode.setFactoryClass("com.rationalinsights." + node.getName().toLowerCase() + "." + node.getName() + "Factory");
+
+                        extension.addNode(knimeNode);
+                    }
+                }
+            }
+
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            jaxbMarshaller.marshal(knimePlugin, pluginXmlFile);
         } catch (JAXBException jaxbException) {
             throw new MojoExecutionException("Can't update plugin.xml file. Error message: " + jaxbException.getMessage());
         }

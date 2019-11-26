@@ -21,7 +21,7 @@ import nl.esciencecenter.e3dchem.python.PythonOptionsPanel;
  * {@link org.knime.core.node.NodeDialogPane}.
  */
 public class ${nodeName}Dialog extends DefaultNodeSettingsPane {
-	private PythonOptionsPanel<HelloWorldRationalInsightsConfig> pythonOptions;
+	private PythonOptionsPanel<${nodeName}Config> pythonOptions;
 	${nodeName}Config config;
 
     /**

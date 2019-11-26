@@ -1,20 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <plugin>
-
-   <extension point="org.knime.workbench.repository.categories">
-      <category
-            description="Category containing my nodes"
-            icon="com/rationalinsights/default.png"
-            level-id="RationalInsightsPythonNodesExtension"
-            name="RationalInsightsPythonNodesExtension"
-            path="/community/3d-e-chem"/>
-   </extension>
-
-    <extension point="org.knime.workbench.repository.nodes">
-        <node category-path="/community/3d-e-chem/HelloWorldRationalInsights" factory-class="com.rationalinsights.HelloWorldRationalInsightsFactory"/>
-        <node category-path="/community/3d-e-chem/HelloWorldRationalInsights" factory-class="com.second.CalcRationalInsightsFactory"/>
-        <node category-path="/community/3d-e-chem/HelloWorldRationalInsights" factory-class="com.third.Python1RationalInsightsFactory"/>
+    <extension point="org.knime.workbench.repository.categories">
+        <category description="Category containing my nodes" icon="com/rationalinsights/default.png" level-id="RationalInsightsPythonNodesExtension" name="RationalInsightsPythonNodesExtension" path="/community/3d-e-chem"/>
     </extension>
-
+    <extension point="org.knime.workbench.repository.nodes">
+        <node category-path="/community/3d-e-chem/HelloWorldRationalInsights" factory-class="com.rationalinsights.pythonnode1.PythonNode1Factory"/>
+        <node category-path="/community/3d-e-chem/HelloWorldRationalInsights" factory-class="com.rationalinsights.pythonnode2.PythonNode2Factory"/>
+    </extension>
 </plugin>
