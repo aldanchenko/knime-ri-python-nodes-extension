@@ -22,6 +22,7 @@
                 <version>1.0.0-SNAPSHOT</version>
                 <configuration>
                     <nodesJsonPath>nodes.json</nodesJsonPath>
+                    <generationResultsDirPath>./plugin/src/java/com/rationalinsights/</generationResultsDirPath>
                 </configuration>
                 <executions>
                     <execution>

@@ -29,12 +29,26 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     @Parameter(property = "nodes.json.path", required = true)
     private String nodesJsonPath;
 
+    @Parameter(property = "generation.result.path", required = true)
+    private String generationResultsDirPath;
+
     public void execute() throws MojoExecutionException {
         Log log = getLog();
 
         log.info("Start generate Nodes.");
+        log.info("Base directory: " + new File("").getAbsolutePath());
 
         List<Node> nodes = loadNodes();
+
+        if (Objects.isNull(generationResultsDirPath) || generationResultsDirPath.length() == 0) {
+            throw new MojoExecutionException("Can't find generation node results directory path.");
+        }
+
+        File generationResultsDir = new File(generationResultsDirPath);
+
+        if (!generationResultsDir.exists()) {
+            throw new MojoExecutionException("Can't find generation node results directory path.");
+        }
 
         for (Node node : nodes) {
             generateNodeConfigJavaFile(node);
