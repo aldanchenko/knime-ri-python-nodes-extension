@@ -149,6 +149,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
                         extension.addNode(knimeNode);
                     }
+                } else if (extension.isCatalogExtension()) {
+//                    extension.setCategory();
                 }
             }
 

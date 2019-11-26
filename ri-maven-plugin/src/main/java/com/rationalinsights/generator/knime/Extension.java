@@ -13,6 +13,7 @@ import java.util.List;
 public class Extension {
 
     private static final String KNIME_NODES_POINT = "org.knime.workbench.repository.nodes";
+    public static final String KNIME_CATEGORIES_POINT = "org.knime.workbench.repository.categories";
 
     @XmlAttribute
     private String point;
@@ -25,6 +26,10 @@ public class Extension {
 
     public boolean isNodesExtension() {
         return KNIME_NODES_POINT.equals(point);
+    }
+
+    public boolean isCatalogExtension() {
+        return KNIME_CATEGORIES_POINT.equals(point);
     }
 
     public void addNode(KnimeNode knimeNode) {
