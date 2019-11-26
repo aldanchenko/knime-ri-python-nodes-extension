@@ -1,4 +1,4 @@
-package com.rationalinsights;
+package com.rationalinsights.${nodePackageName};
 
 import java.util.Set;
 

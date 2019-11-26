@@ -33,6 +33,13 @@ import java.util.*;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.INITIALIZE)
 public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
+    private static final String CONFIG_JAVA_TEMPLATE_NAME = "__Config.java.ftl";
+    private static final String DIALOG_JAVA_TEMPLATE_NAME = "__Dialog.java.ftl";
+    private static final String FACTORY_JAVA_TEMPLATE_NAME = "__Factory.java.ftl";
+    private static final String MODEL_JAVA_TEMPLATE_NAME = "__Model.java.ftl";
+    private static final String VIEW_JAVA_TEMPLATE_NAME = "__View.java.ftl";
+    private static final String FACTORY_XML_TEMPLATE_NAME = "__Factory.xml.ftl";
+
     @Parameter(property = "nodes.json.path", required = true)
     private String nodesJsonPath;
 
@@ -164,98 +171,164 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     }
 
     /**
-     * TODO:
+     * Generate Knime node factory xml file.
      *
-     * @param node  -
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
      *
-     * @param nodePackageDirectory
      * @throws MojoExecutionException -
      */
     private void generateNodeFactoryXmlFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Xml File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
+        defaultTemplateParametersMap.put("shortDescription", node.getShortDescription());
+        defaultTemplateParametersMap.put("fullDescription", node.getFullDescription());
 
-        templateParametersMap.put("nodeName", node.getName());
-        templateParametersMap.put("shortDescription", node.getShortDescription());
-        templateParametersMap.put("fullDescription", node.getFullDescription());
-
-        Template template = getTemplate("__Factory.xml.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Factory.xml"));
+        generateNodeFile(FACTORY_XML_TEMPLATE_NAME,
+                node.getName() + "Factory.xml",
+                defaultTemplateParametersMap,
+                nodePackageDirectory);
 
         getLog().info("End generate Node Factory Xml File.");
     }
 
+    /**
+     * Generate Knime node view java file.
+     *
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
     private void generateNodeViewJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node View Java File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
-        templateParametersMap.put("nodeName", node.getName());
-
-        Template template = getTemplate("__View.java.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "View.java"));
+        generateNodeFile(VIEW_JAVA_TEMPLATE_NAME,
+                node.getName() + "View.java",
+                getDefaultTemplateParametersMap(node),
+                nodePackageDirectory);
 
         getLog().info("End generate Node View Java File.");
     }
 
+    /**
+     * Generate Knime node model java file.
+     *
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
     private void generateNodeModelJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Model Java File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
 
-        templateParametersMap.put("nodeName", node.getName());
-        templateParametersMap.put("pythonScript", node.getPythonScriptPath());
+        defaultTemplateParametersMap.put("pythonScript", node.getPythonScriptPath());
 
-        Template template = getTemplate("__Model.java.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Model.java"));
+        generateNodeFile(MODEL_JAVA_TEMPLATE_NAME,
+                node.getName() + "Model.java",
+                defaultTemplateParametersMap,
+                nodePackageDirectory);
 
         getLog().info("End generate Node Model Java File.");
     }
 
+    /**
+     * Generate Knime node factory java file.
+     *
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
     private void generateNodeFactoryJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Java File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
-        templateParametersMap.put("nodeName", node.getName());
-
-        Template template = getTemplate("__Factory.java.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Factory.java"));
+        generateNodeFile(FACTORY_JAVA_TEMPLATE_NAME,
+                node.getName() + "Factory.java",
+                getDefaultTemplateParametersMap(node),
+                nodePackageDirectory);
 
         getLog().info("End generate Node Factory Java File.");
     }
 
+    /**
+     * Generate Knime node dialog java file.
+     *
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
     private void generateNodeDialogJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Dialog Java File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
-        templateParametersMap.put("nodeName", node.getName());
-
-        Template template = getTemplate("__Dialog.java.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Dialog.java"));
+        generateNodeFile(DIALOG_JAVA_TEMPLATE_NAME,
+                node.getName() + "Dialog.java",
+                getDefaultTemplateParametersMap(node),
+                nodePackageDirectory);
 
         getLog().info("End generate Node Dialog Java File.");
     }
 
+    /**
+     * Generate Knime node config java file.
+     *
+     * @param node                  - RI node
+     * @param nodePackageDirectory  - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
     private void generateNodeConfigJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Config Java File.");
 
-        Map<String, Object> templateParametersMap = new HashMap<>();
-        templateParametersMap.put("nodeName", node.getName());
-
-        Template template = getTemplate("__Config.java.ftl");
-
-        saveTemplateResult(template, templateParametersMap, new File(nodePackageDirectory, node.getName() + "Config.java"));
+        generateNodeFile(CONFIG_JAVA_TEMPLATE_NAME,
+                node.getName() + "Config.java",
+                getDefaultTemplateParametersMap(node),
+                nodePackageDirectory);
 
         getLog().info("End generate Node Config Java File.");
     }
 
-    private void saveTemplateResult(Template template, Map<String, Object> templateParametersMap, String resultFile) throws MojoExecutionException {
+    /**
+     * Generate file by template and save it to destination package directory by specified name.
+     *
+     * @param templateFileName      - freemarker tempalte name
+     * @param resultFileName        - result file name
+     * @param templateParametersMap - freemarker template parameters map
+     * @param packageDirectory      - destination package directory
+     *
+     * @throws MojoExecutionException -
+     */
+    private void generateNodeFile(String templateFileName,
+                                  String resultFileName,
+                                  Map<String, Object> templateParametersMap,
+                                  File packageDirectory) throws MojoExecutionException {
+        getLog().info("Start generate Node File.");
 
+        Template template = getTemplate(templateFileName);
+
+        saveTemplateResult(template, templateParametersMap, new File(packageDirectory, resultFileName));
+
+        getLog().info("End generate Node File.");
+    }
+
+    /**
+     * Generate map with default parameters (node name).
+     *
+     * @param node - source RI node
+     *
+     * @return Map<String, Object>
+     */
+    private Map<String, Object> getDefaultTemplateParametersMap(Node node) {
+        Map<String, Object> templateParametersMap = new HashMap<>();
+
+        templateParametersMap.put("nodeName", node.getName());
+        templateParametersMap.put("nodePackageName", node.getName().toLowerCase());
+
+        return templateParametersMap;
     }
 
     /**

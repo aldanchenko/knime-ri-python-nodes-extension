@@ -1,4 +1,4 @@
-package com.rationalinsights;
+package com.rationalinsights.${nodePackageName};
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.InvalidSettingsException;
