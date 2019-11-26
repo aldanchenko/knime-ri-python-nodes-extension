@@ -1,6 +1,5 @@
 package com.rationalinsights.generator;
 
-import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.plugin.testing.MojoRule;
 import org.apache.maven.plugin.testing.resources.TestResources;
 import org.junit.Assert;
@@ -9,7 +8,10 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class RIPythonNodesGenerationMojoTest /*extends AbstractMojoTestCase*/ {
+/**
+ * Test for {@link RIPythonNodesGenerationMojo}.
+ */
+public class RIPythonNodesGenerationMojoTest {
 
     @Rule
     public TestResources resources = new TestResources();
@@ -40,14 +42,7 @@ public class RIPythonNodesGenerationMojoTest /*extends AbstractMojoTestCase*/ {
                 (RIPythonNodesGenerationMojo) rule.lookupMojo("generate", pomFile);
 
         Assert.assertNotNull(pythonNodesGenerationMojo);
+
         pythonNodesGenerationMojo.execute();
     }
-
-//    public void testMojoGoal() throws Exception {
-//        File testPomFile = new File(getBasedir(), "src/test/resources/basic-test-plugin-pom.xml");
-//
-//        RIPythonNodesGenerationMojo mojo = (RIPythonNodesGenerationMojo) lookupMojo("generate", testPomFile);
-//
-//        assertNotNull(mojo);
-//    }
 }
