@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rationalinsights.generator.knime.KnimePlugin;
 import com.rationalinsights.generator.model.Node;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -16,6 +17,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -32,6 +36,9 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     @Parameter(property = "generation.result.path", required = true)
     private String generationResultsDirPath;
 
+    @Parameter(property = "plugin.xml.path", required = true)
+    private String pluginXmlPath;
+
     public void execute() throws MojoExecutionException {
         Log log = getLog();
 
@@ -40,7 +47,9 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         List<Node> nodes = loadNodes();
 
-         File generationResultsDir = getGenerationResultsDirectory();
+        File generationResultsDir = getGenerationResultsDirectory();
+
+        File pluginXmlFile = getPluginXml();
 
         for (Node node : nodes) {
             File nodePackageDirectory = createNodePackageDirectory(generationResultsDir, node);
@@ -53,7 +62,49 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             generateNodeFactoryXmlFile(node, nodePackageDirectory);
         }
 
+        updatePluginXml(pluginXmlFile);
+
         log.info("End generate Nodes.");
+    }
+
+    /**
+     * Get plugin.xml file by {@link #pluginXmlPath}.
+     *
+     * @throws MojoExecutionException -
+     *
+     * @return File
+     */
+    private File getPluginXml() throws MojoExecutionException {
+        if (Objects.isNull(pluginXmlPath) || pluginXmlPath.length() == 0) {
+            throw new MojoExecutionException("Can't find plugin.xml path.");
+        }
+
+        File pluginXmlFile = new File(pluginXmlPath);
+
+        if (!pluginXmlFile.exists()) {
+            throw new MojoExecutionException("Can't find plugin.xml path.");
+        }
+
+        return pluginXmlFile;
+    }
+
+    /**
+     * TODO: method under construction.
+     *
+     * @param pluginXmlFile
+     * @throws MojoExecutionException
+     */
+    private void updatePluginXml(File pluginXmlFile) throws MojoExecutionException {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(KnimePlugin.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+            KnimePlugin knimePlugin = (KnimePlugin) jaxbUnmarshaller.unmarshal(pluginXmlFile);
+
+            System.out.println(knimePlugin);
+        } catch (JAXBException jaxbException) {
+            throw new MojoExecutionException("Can't update plugin.xml file. Error message: " + jaxbException.getMessage());
+        }
     }
 
     private File createNodePackageDirectory(File generationResultsDir, Node node) {
@@ -198,22 +249,22 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         try {
             template.process(templateParametersMap, consoleWriter);
-        } catch (TemplateException | IOException e) {
-            throw new MojoExecutionException("Can't process Knime java template.");
+        } catch (TemplateException | IOException exception) {
+            throw new MojoExecutionException("Can't process Knime java template. Error message: " + exception.getMessage());
         }
 
         Writer fileWriter;
 
         try {
             fileWriter = new FileWriter(resultFile);
-        } catch (IOException e) {
-            throw new MojoExecutionException("Can't save template generation results.");
+        } catch (IOException ioException) {
+            throw new MojoExecutionException("Can't save template generation results. Error message: " + ioException.getMessage());
         }
 
         try {
             template.process(templateParametersMap, fileWriter);
-        } catch (TemplateException | IOException e) {
-            throw new MojoExecutionException("Can't save template generation results.");
+        } catch (TemplateException | IOException exception) {
+            throw new MojoExecutionException("Can't process Knime java template. Error message: " + exception.getMessage());
         } finally {
             try {
                 fileWriter.close();
@@ -246,8 +297,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         try {
             template = configuration.getTemplate(templateName);
-        } catch (IOException e) {
-            throw new MojoExecutionException("Can't find Knime java templates.");
+        } catch (IOException ioException) {
+            throw new MojoExecutionException("Can't find Knime java templates. Error message: " + ioException.getMessage());
         }
 
         return template;
@@ -285,8 +336,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             }
 
             return nodes;
-        } catch (FileNotFoundException e) {
-            throw new MojoExecutionException("Error on nodes.json file read.");
+        } catch (FileNotFoundException exception) {
+            throw new MojoExecutionException("Error on nodes.json file read. Error message: " + exception.getMessage());
         }
     }
 }

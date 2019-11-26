@@ -19,6 +19,7 @@
                 <configuration>
                     <nodesJsonPath>../nodes.json</nodesJsonPath>
                     <generationResultsDirPath>../plugin/src/java/com/rationalinsights/</generationResultsDirPath>
+                    <pluginXmlPath>../plugin/plugin.xml</pluginXmlPath>
                 </configuration>
                 <executions>
                     <execution>
