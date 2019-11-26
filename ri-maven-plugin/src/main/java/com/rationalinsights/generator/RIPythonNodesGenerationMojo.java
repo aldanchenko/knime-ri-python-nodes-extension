@@ -18,6 +18,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.codehaus.plexus.util.FileUtils;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -70,11 +71,35 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             generateNodeModelJavaFile(node, nodePackageDirectory);
             generateNodeViewJavaFile(node, nodePackageDirectory);
             generateNodeFactoryXmlFile(node, nodePackageDirectory);
+
+            copyPythonFileToNodePackage(new File(node.getPythonScriptPath()), nodePackageDirectory);
         }
 
         updatePluginXml(pluginXmlFile, nodes);
 
         log.info("End generate Nodes.");
+    }
+
+    /**
+     * Copy python file to node package directory.
+     *
+     * @param sourcePythonFile      - source python file
+     * @param nodePackageDirectory  - destination node package directory
+     *
+     * @throws MojoExecutionException   -
+     */
+    private void copyPythonFileToNodePackage(File sourcePythonFile, File nodePackageDirectory) throws MojoExecutionException {
+        if (!sourcePythonFile.exists()) {
+            throw new MojoExecutionException("Can't find source python file: " + sourcePythonFile.getAbsolutePath());
+        }
+
+        File destinationPythonFile = new File(nodePackageDirectory, sourcePythonFile.getName());
+
+        try {
+            FileUtils.copyFile(sourcePythonFile, destinationPythonFile);
+        } catch (IOException ioException) {
+            throw new MojoExecutionException("Can't find plugin.xml path. Error messaage: " + ioException.getMessage());
+        }
     }
 
     /**
@@ -225,7 +250,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
 
         Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
 
-        defaultTemplateParametersMap.put("pythonScript", node.getPythonScriptPath());
+        defaultTemplateParametersMap.put("pythonScript", new File(node.getPythonScriptPath()).getName());
 
         generateNodeFile(MODEL_JAVA_TEMPLATE_NAME,
                 node.getName() + "Model.java",
