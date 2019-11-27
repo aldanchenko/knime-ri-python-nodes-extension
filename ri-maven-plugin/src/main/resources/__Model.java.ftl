@@ -21,7 +21,18 @@ public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> 
      */
     protected ${nodeName}Model() {
         // TODO one incoming port and one outgoing port is assumed
-        super(new PortType[] { BufferedDataTable.TYPE }, new PortType[] { BufferedDataTable.TYPE });
+
+        super(new PortType[]{
+                    <#list inputPorts as inputPort>
+                        BufferedDataTable.TYPE,
+                    </#list>
+                    },
+                    new PortType[]{
+                    <#list outputPorts as outputPort>
+                        BufferedDataTable.TYPE,
+                    </#list>
+                    });
+
         python_code_filename = "${pythonScript}";
     }
 

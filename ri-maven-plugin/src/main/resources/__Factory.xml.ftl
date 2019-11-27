@@ -83,12 +83,17 @@
 	</fullDescription>
 
 	<ports>
-		<inPort index="0" name="In-Port name">Description of first input port...
-		</inPort>
-		<!-- possibly more input ports here -->
-		<outPort index="0" name="Out-Port name">Description of first output port...
-		</outPort>
-		<!-- possibly more output ports here -->
+        <#list inputPorts as inputPort>
+          <inPort index="${inputPort.index}" name="${inputPort.name}">
+            ${inputPort.description}
+          </inPort>
+        </#list>
+
+		<#list outputPorts as outputPort>
+          <outPort index="${outputPort.index}" name="${outputPort.name}">
+            ${outputPort.description}
+          </outPort>
+        </#list>
 	</ports>
 	<views>
 		<view index="0" name="name of first view">Description of first view...</view>

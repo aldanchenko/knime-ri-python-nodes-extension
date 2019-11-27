@@ -7,22 +7,26 @@
     "pythonScriptPath": "../python_scripts/hello_world_1.py",
     "shortDescription": "Test Knime Python node",
     "fullDescription": "Test Knime Python node",
-    "inputList": [
+    "inputPorts": [
       {
+        "index": 0,
         "name": "inPort1",
         "description": "inPort1 desc"
       },
       {
-        "name": "outPort2",
-        "description": "outPort2 desc"
+        "index": 1,
+        "name": "intPort2",
+        "description": "inPort2 desc"
       }
     ],
-    "outputList": [
+    "outputPorts": [
       {
+        "index": 0,
         "name": "outPort2",
         "description": "inPort2 desc"
       },
       {
+        "index": 1,
         "name": "outPort2",
         "description": "outPort2 desc"
       }
@@ -36,14 +40,16 @@
     "pythonScriptPath": "../python_scripts/hello_world_2.py",
     "shortDescription": "Test Knime Python node",
     "fullDescription": "Test Knime Python node",
-    "inputList": [
+    "inputPorts": [
       {
+        "index": 0,
         "name": "inPort1",
         "description": "inPort1 desc"
       }
     ],
-    "outputList": [
+    "outputPorts": [
       {
+        "index": 0,
         "name": "outPort2",
         "description": "inPort2 desc"
       }

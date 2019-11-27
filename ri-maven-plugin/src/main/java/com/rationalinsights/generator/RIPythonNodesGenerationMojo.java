@@ -255,6 +255,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
         defaultTemplateParametersMap.put("shortDescription", node.getShortDescription());
         defaultTemplateParametersMap.put("fullDescription", node.getFullDescription());
+        defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
+        defaultTemplateParametersMap.put("outputPorts", node.getOutputPorts());
 
         generateNodeFile(FACTORY_XML_TEMPLATE_NAME,
                 node.getName() + "Factory.xml",
@@ -297,6 +299,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
 
         defaultTemplateParametersMap.put("pythonScript", new File(node.getPythonScriptPath()).getName());
+        defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
+        defaultTemplateParametersMap.put("outputPorts", node.getOutputPorts());
 
         generateNodeFile(MODEL_JAVA_TEMPLATE_NAME,
                 node.getName() + "Model.java",
