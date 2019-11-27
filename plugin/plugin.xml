@@ -2,7 +2,11 @@
 <plugin>
     <extension point="org.knime.workbench.repository.categories">
         <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="rationalinsights" name="Rational Insights" path="/"/>
+        <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="models" name="Models" path="/rationalinsights"/>
+        <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="display" name="Display" path="/rationalinsights"/>
     </extension>
     <extension point="org.knime.workbench.repository.nodes">
+        <node category-path="/rationalinsights/display/" factory-class="com.rationalinsights.pythonnode1.PythonNode1Factory"/>
+        <node category-path="/rationalinsights/models/" factory-class="com.rationalinsights.pythonnode2.PythonNode2Factory"/>
     </extension>
 </plugin>

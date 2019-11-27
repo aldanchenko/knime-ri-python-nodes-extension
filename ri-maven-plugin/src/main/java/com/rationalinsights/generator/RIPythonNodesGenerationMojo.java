@@ -74,11 +74,34 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             generateNodeFactoryXmlFile(node, nodePackageDirectory);
 
             copyPythonFileToNodePackage(new File(node.getPythonScriptPath()), nodePackageDirectory);
+            copyIconFileToNodePackage(new File(node.getIconPath()), nodePackageDirectory);
         }
 
         updatePluginXml(pluginXmlFile, nodes);
 
         log.info("End generate Nodes.");
+    }
+
+    /**
+     * Copy icon file to node package directory.
+     *
+     * @param sourceIconFile        - source icon file
+     * @param nodePackageDirectory  - destination node package directory
+     *
+     * @throws MojoExecutionException   -
+     */
+    private void copyIconFileToNodePackage(File sourceIconFile, File nodePackageDirectory) throws MojoExecutionException {
+        if (!sourceIconFile.exists()) {
+            throw new MojoExecutionException("Can't find source icon file: " + sourceIconFile.getAbsolutePath());
+        }
+
+        File destinationPythonFile = new File(nodePackageDirectory, "default.png");
+
+        try {
+            FileUtils.copyFile(sourceIconFile, destinationPythonFile);
+        } catch (IOException ioException) {
+            throw new MojoExecutionException("Can't copy icon to node package directory. Error messaage: " + ioException.getMessage());
+        }
     }
 
     /**
@@ -99,7 +122,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         try {
             FileUtils.copyFile(sourcePythonFile, destinationPythonFile);
         } catch (IOException ioException) {
-            throw new MojoExecutionException("Can't find plugin.xml path. Error messaage: " + ioException.getMessage());
+            throw new MojoExecutionException("Can't copy python script to node package directory. Error messaage: " + ioException.getMessage());
         }
     }
 
