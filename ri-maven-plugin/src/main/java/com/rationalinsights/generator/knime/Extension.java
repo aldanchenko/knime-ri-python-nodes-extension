@@ -13,13 +13,13 @@ import java.util.List;
 public class Extension {
 
     private static final String KNIME_NODES_POINT = "org.knime.workbench.repository.nodes";
-    public static final String KNIME_CATEGORIES_POINT = "org.knime.workbench.repository.categories";
+    private static final String KNIME_CATEGORIES_POINT = "org.knime.workbench.repository.categories";
 
     @XmlAttribute
     private String point;
 
-    @XmlElement
-    private Category category;
+    @XmlElement(name = "category")
+    private List<Category> categories;
 
     @XmlElement(name = "node")
     private List<KnimeNode> nodes;
@@ -36,6 +36,10 @@ public class Extension {
         this.nodes.add(knimeNode);
     }
 
+    public void addCategory(Category category) {
+        this.categories.add(category);
+    }
+
     public String getPoint() {
         return point;
     }
@@ -44,12 +48,12 @@ public class Extension {
         this.point = point;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public List<KnimeNode> getNodes() {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.rationalinsights.generator.knime.Category;
 import com.rationalinsights.generator.knime.Extension;
 import com.rationalinsights.generator.knime.KnimeNode;
 import com.rationalinsights.generator.knime.KnimePlugin;
@@ -144,13 +145,33 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
                     for (Node node : nodes) {
                         KnimeNode knimeNode = new KnimeNode();
 
-                        knimeNode.setCategoryPath("/community/3d-e-chem/HelloWorldRationalInsights");
+                        knimeNode.setCategoryPath("/rationalinsights/" + node.getCatalog().toLowerCase() + "/");
                         knimeNode.setFactoryClass("com.rationalinsights." + node.getName().toLowerCase() + "." + node.getName() + "Factory");
 
                         extension.addNode(knimeNode);
                     }
                 } else if (extension.isCatalogExtension()) {
-//                    extension.setCategory();
+                    extension.getCategories().removeIf(category -> !category.getPath().equals("/"));
+
+                    Map<String, Node> categoryNodesMap = new HashMap<>();
+
+                    for (Node node : nodes) {
+                        categoryNodesMap.put(node.getCatalog(), node);
+                    }
+
+                    for (Map.Entry<String, Node> entry : categoryNodesMap.entrySet()) {
+                        String categoryName = entry.getKey();
+
+                        Category category = new Category();
+
+                        category.setDescription("Empty for now");
+                        category.setIcon("com/rationalinsights/rationalinsights_icon.png");
+                        category.setLevelId(categoryName.toLowerCase());
+                        category.setName(categoryName);
+                        category.setPath("/rationalinsights");
+
+                        extension.addCategory(category);
+                    }
                 }
             }
 
