@@ -13,8 +13,8 @@ public class Node {
     private String pythonScriptPath;
     private String shortDescription;
     private String fullDescription;
-    private List<InPort> inPorts;
-    private List<OutPort> outPorts;
+    private List<InputPort> inputPorts;
+    private List<OutputPort> outputPorts;
 
     public String getOrganization() {
         return organization;
@@ -56,20 +56,20 @@ public class Node {
         this.pythonScriptPath = pythonScriptPath;
     }
 
-    public List<InPort> getInPorts() {
-        return inPorts;
+    public List<InputPort> getInputPorts() {
+        return inputPorts;
     }
 
-    public void setInPorts(List<InPort> inPorts) {
-        this.inPorts = inPorts;
+    public void setInputPorts(List<InputPort> inputPorts) {
+        this.inputPorts = inputPorts;
     }
 
-    public List<OutPort> getOutPorts() {
-        return outPorts;
+    public List<OutputPort> getOutputPorts() {
+        return outputPorts;
     }
 
-    public void setOutPorts(List<OutPort> outPorts) {
-        this.outPorts = outPorts;
+    public void setOutputPorts(List<OutputPort> outputPorts) {
+        this.outputPorts = outputPorts;
     }
 
     public String getShortDescription() {
