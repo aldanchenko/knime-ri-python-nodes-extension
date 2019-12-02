@@ -359,9 +359,13 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     private void generateNodeConfigJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
         getLog().info("Start generate Node Config Java File.");
 
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
+        defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
+        defaultTemplateParametersMap.put("outputPorts", node.getOutputPorts());
+
         generateNodeFile(CONFIG_JAVA_TEMPLATE_NAME,
                 node.getName() + "Config.java",
-                getDefaultTemplateParametersMap(node),
+                defaultTemplateParametersMap,
                 nodePackageDirectory);
 
         getLog().info("End generate Node Config Java File.");

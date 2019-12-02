@@ -3,9 +3,9 @@
    <feature id="rationalinsights-knime-plugin.feature" version="1.0.0.qualifier">
       <category name="nl.esciencecenter.3D-e-Chem"/>
    </feature>
-   <category-def name="nl.esciencecenter.3D-e-Chem" label="KNIME 3D-e-Chem Contributions">
+   <category-def name="nl.esciencecenter.3D-e-Chem" label="KNIME Rational Insights Python nodes extension">
       <description>
-			3D-e-Chem: Collection KNIME nodes &amp; Extensions for the NLeSC 3d-e-Chem
+			Rational Insights Python nodes extension
 			project
       </description>
    </category-def>
