@@ -10,25 +10,25 @@
     "inputPorts": [
       {
         "index": 0,
-        "name": "inPort1",
+        "name": "input_table1",
         "description": "inPort1 desc"
       },
       {
         "index": 1,
-        "name": "intPort2",
+        "name": "input_table2",
         "description": "inPort2 desc"
       }
     ],
     "outputPorts": [
       {
         "index": 0,
-        "name": "outPort2",
-        "description": "inPort2 desc"
+        "name": "output_table1",
+        "description": "output_table1 desc"
       },
       {
         "index": 1,
-        "name": "outPort2",
-        "description": "outPort2 desc"
+        "name": "output_table2",
+        "description": "output_table2 desc"
       }
     ]
   },
@@ -43,14 +43,14 @@
     "inputPorts": [
       {
         "index": 0,
-        "name": "inPort1",
+        "name": "input_table",
         "description": "inPort1 desc"
       }
     ],
     "outputPorts": [
       {
         "index": 0,
-        "name": "outPort2",
+        "name": "output_table",
         "description": "inPort2 desc"
       }
     ]

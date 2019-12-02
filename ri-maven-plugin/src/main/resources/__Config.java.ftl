@@ -30,13 +30,24 @@ public class ${nodeName}Config extends PythonWrapperNodeConfig {
     public ${nodeName}Config(String[] inputTables, String[] outputTables) {
 		super(inputTables, outputTables);
 		// this Python package will be checked before executing the node
-		//addRequiredModule("pandas");
+		addRequiredModule("pandas");
 	}
 
 	public ${nodeName}Config() {
-		super();
+	    super(new String[] {
+                    <#list inputPorts as inputPort>
+                         "${inputPort.name}",
+                    </#list>
+	            }, new String[] {
+	                <#list outputPorts as outputPort>
+                         "${outputPort.name}",
+                    </#list>
+                });
+
+        System.out.println(getVariableNames());
+
 		// this Python package will be checked before executing the node
-		//addRequiredModule("pandas");
+		addRequiredModule("pandas");
 	}
 
     @Override

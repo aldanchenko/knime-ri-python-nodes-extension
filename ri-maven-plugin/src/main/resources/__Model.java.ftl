@@ -9,6 +9,8 @@ import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.port.PortType;
 
+import org.knime.core.node.NodeLogger;
+
 import nl.esciencecenter.e3dchem.python.PythonWrapperNodeModel;
 
 /**
@@ -16,6 +18,9 @@ import nl.esciencecenter.e3dchem.python.PythonWrapperNodeModel;
  *
  */
 public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> {
+
+    private static final NodeLogger LOGGER = NodeLogger.getLogger(${nodeName}Model.class);
+
     /**
      * Constructor for the node model.
      */
@@ -44,10 +49,26 @@ public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> 
     @Override
     protected DataTableSpec[] getOutputSpecs(DataTableSpec[] inSpecs) {
         // Columns returned by Python script, allows connection of downstream nodes without executing node.
-        DataTableSpec outputSpec = new DataTableSpec(new DataColumnSpecCreator("Column 0", StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator("Column 1", DoubleCell.TYPE).createSpec(),
-                new DataColumnSpecCreator("Column 2", IntCell.TYPE).createSpec());
-        return new DataTableSpec[] { outputSpec };
+
+        LOGGER.info("Enter getOutputSpecs() method.");
+        LOGGER.info("inSpecs = " + inSpecs);
+
+        for (int i = 0; i < inSpecs.length; i++) {
+            LOGGER.info("inSpecs[i] = " + inSpecs[i]);
+        }
+
+        DataTableSpec outputSpec = new DataTableSpec(
+                new DataColumnSpecCreator("Column 0", StringCell.TYPE).createSpec(),
+                new DataColumnSpecCreator("Column 1", IntCell.TYPE).createSpec());
+
+        LOGGER.info("inSpecs = " + inSpecs);
+
+        //return new DataTableSpec[] { outputSpec };
+        return new DataTableSpec[] {
+                    <#list inputPorts as inputPort>
+                        null,
+                    </#list>
+                    };
     }
 
     /**
