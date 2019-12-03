@@ -44,8 +44,6 @@ public class ${nodeName}Config extends PythonWrapperNodeConfig {
                     </#list>
                 });
 
-        System.out.println(getVariableNames());
-
 		// this Python package will be checked before executing the node
 		addRequiredModule("pandas");
 	}

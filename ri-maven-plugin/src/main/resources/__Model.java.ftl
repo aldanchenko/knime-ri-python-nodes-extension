@@ -49,21 +49,6 @@ public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> 
     @Override
     protected DataTableSpec[] getOutputSpecs(DataTableSpec[] inSpecs) {
         // Columns returned by Python script, allows connection of downstream nodes without executing node.
-
-        LOGGER.info("Enter getOutputSpecs() method.");
-        LOGGER.info("inSpecs = " + inSpecs);
-
-        for (int i = 0; i < inSpecs.length; i++) {
-            LOGGER.info("inSpecs[i] = " + inSpecs[i]);
-        }
-
-        DataTableSpec outputSpec = new DataTableSpec(
-                new DataColumnSpecCreator("Column 0", StringCell.TYPE).createSpec(),
-                new DataColumnSpecCreator("Column 1", IntCell.TYPE).createSpec());
-
-        LOGGER.info("inSpecs = " + inSpecs);
-
-        //return new DataTableSpec[] { outputSpec };
         return new DataTableSpec[] {
                     <#list inputPorts as inputPort>
                         null,
