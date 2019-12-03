@@ -1,58 +1,73 @@
-[
-  {
-    "organization": "Rationalinsights",
-    "catalog": "Display",
-    "name": "PythonNode1",
-    "iconPath": "./icons/icon1.png",
-    "pythonScriptPath": "./python_scripts/hello_world_1.py",
-    "shortDescription": "Test Knime Python node",
-    "fullDescription": "Test Knime Python node",
-    "inputPorts": [
-      {
-        "index": 0,
-        "name": "input_table1",
-        "description": "inPort1 desc"
-      },
-      {
-        "index": 1,
-        "name": "input_table2",
-        "description": "inPort2 desc"
-      }
-    ],
-    "outputPorts": [
-      {
-        "index": 0,
-        "name": "output_table1",
-        "description": "output_table1 desc"
-      },
-      {
-        "index": 1,
-        "name": "output_table2",
-        "description": "output_table2 desc"
-      }
-    ]
-  },
-  {
-    "organization": "Rationalinsights",
-    "catalog": "Models",
-    "name": "PythonNode2",
-    "iconPath": "./icons/icon2.png",
-    "pythonScriptPath": "./python_scripts/hello_world_2.py",
-    "shortDescription": "Test Knime Python node",
-    "fullDescription": "Test Knime Python node",
-    "inputPorts": [
-      {
-        "index": 0,
-        "name": "input_table",
-        "description": "inPort1 desc"
-      }
-    ],
-    "outputPorts": [
-      {
-        "index": 0,
-        "name": "output_table",
-        "description": "inPort2 desc"
-      }
-    ]
-  }
-]
+{
+  "name": "RationalInsights",
+  "icon": "./icons/python_icon_1.png",
+  "description": "RationalInsights Python Nodes",
+  "catalogs": [
+    {
+      "name": "Display",
+      "icon": "./icons/devops.png",
+      "description": "RationalInsights Python Display Nodes"
+    },
+    {
+      "name": "Models",
+      "icon": "./icons/developer.png",
+      "description": "RationalInsights Python Models Nodes"
+    }
+  ],
+  "nodes": [
+    {
+      "parentCatalog": "Display",
+      "name": "TwoInputTwoOutputPythonNode",
+      "icon": "./icons/icon1.png",
+      "pythonScriptPath": "./python_scripts/hello_world_1.py",
+      "shortDescription": "Test Knime Python node",
+      "fullDescription": "Test Knime Python node",
+      "inputPorts": [
+        {
+          "index": 0,
+          "name": "input_table1",
+          "description": "inPort1 desc"
+        },
+        {
+          "index": 1,
+          "name": "input_table2",
+          "description": "inPort2 desc"
+        }
+      ],
+      "outputPorts": [
+        {
+          "index": 0,
+          "name": "output_table1",
+          "description": "output_table1 desc"
+        },
+        {
+          "index": 1,
+          "name": "output_table2",
+          "description": "output_table2 desc"
+        }
+      ]
+    },
+    {
+      "parentCatalog": "Models",
+      "name": "OneInputOneOutputPythonNode",
+      "icon": "./icons/icon2.png",
+      "pythonScriptPath": "./python_scripts/hello_world_2.py",
+      "shortDescription": "Test Knime Python node",
+      "fullDescription": "Test Knime Python node",
+      "inputPorts": [
+        {
+          "index": 0,
+          "name": "input_table",
+          "description": "inPort1 desc"
+        }
+      ],
+      "outputPorts": [
+        {
+          "index": 0,
+          "name": "output_table",
+          "description": "inPort2 desc"
+        }
+      ]
+    }
+  ]
+}

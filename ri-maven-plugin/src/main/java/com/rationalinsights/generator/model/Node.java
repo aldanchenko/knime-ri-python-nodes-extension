@@ -5,47 +5,20 @@ import java.util.List;
 /**
  * Rationalinsights Knime node description (handler).
  */
-public class Node {
-    private String organization;
-    private String catalog;
-    private String name;
-    private String iconPath;
+public class Node extends AbstractTreeElement {
+    private String parentCatalog;
     private String pythonScriptPath;
     private String shortDescription;
     private String fullDescription;
     private List<InputPort> inputPorts;
     private List<OutputPort> outputPorts;
 
-    public String getOrganization() {
-        return organization;
+    public String getParentCatalog() {
+        return parentCatalog;
     }
 
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public String getCatalog() {
-        return catalog;
-    }
-
-    public void setCatalog(String catalog) {
-        this.catalog = catalog;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIconPath() {
-        return iconPath;
-    }
-
-    public void setIconPath(String iconPath) {
-        this.iconPath = iconPath;
+    public void setParentCatalog(String parentCatalog) {
+        this.parentCatalog = parentCatalog;
     }
 
     public String getPythonScriptPath() {

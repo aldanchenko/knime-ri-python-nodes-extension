@@ -8,7 +8,9 @@ import com.rationalinsights.generator.knime.Category;
 import com.rationalinsights.generator.knime.Extension;
 import com.rationalinsights.generator.knime.KnimeNode;
 import com.rationalinsights.generator.knime.KnimePlugin;
+import com.rationalinsights.generator.model.Catalog;
 import com.rationalinsights.generator.model.Node;
+import com.rationalinsights.generator.model.RINodes;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -28,6 +30,8 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Read nodes.json file and generate Nodes source files.
@@ -57,13 +61,17 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         log.info("Start generate Nodes.");
         log.info("Base directory: " + new File("").getAbsolutePath());
 
-        List<Node> nodes = loadNodes();
+        RINodes riNodes = loadRINodes();
 
         File generationResultsDir = getGenerationResultsDirectory();
 
+        clearPreviousGeneratedPackages(generationResultsDir);
+
         File pluginXmlFile = getPluginXml();
 
-        for (Node node : nodes) {
+        updatePluginXml(pluginXmlFile, riNodes, generationResultsDir);
+
+        for (Node node : riNodes.getNodes()) {
             File nodePackageDirectory = createNodePackageDirectory(generationResultsDir, node);
 
             generateNodeConfigJavaFile(node, nodePackageDirectory);
@@ -74,12 +82,23 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             generateNodeFactoryXmlFile(node, nodePackageDirectory);
 
             copyPythonFileToNodePackage(new File(node.getPythonScriptPath()), nodePackageDirectory);
-            copyIconFileToNodePackage(new File(node.getIconPath()), nodePackageDirectory);
+            copyIconFileToNodePackage(new File(node.getIcon()), nodePackageDirectory);
         }
 
-        updatePluginXml(pluginXmlFile, nodes);
-
         log.info("End generate Nodes.");
+    }
+
+    /**
+     * Clear all previous generated packages which can remain as garbage if the node names have changed.
+     *
+     * @param generationResultsDir - result packages directory
+     */
+    private void clearPreviousGeneratedPackages(File generationResultsDir) {
+        for (File file : Objects.requireNonNull(generationResultsDir.listFiles())) {
+            if (file.isDirectory()) {
+                file.delete();
+            }
+        }
     }
 
     /**
@@ -95,10 +114,34 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             throw new MojoExecutionException("Can't find source icon file: " + sourceIconFile.getAbsolutePath());
         }
 
-        File destinationPythonFile = new File(nodePackageDirectory, "default.png");
+        File destinationFile = new File(nodePackageDirectory, "default.png");
 
         try {
-            FileUtils.copyFile(sourceIconFile, destinationPythonFile);
+            FileUtils.copyFile(sourceIconFile, destinationFile);
+        } catch (IOException ioException) {
+            throw new MojoExecutionException("Can't copy icon to node package directory. Error messaage: " + ioException.getMessage());
+        }
+    }
+
+    /**
+     * Copy source icon file to destination icon file.
+     *
+     * @param sourceIconFile        - source icon file
+     * @param destinationIconFile   - destination icon file
+     *
+     * @throws MojoExecutionException -
+     */
+    private void copyIconFile(File sourceIconFile, File destinationIconFile) throws MojoExecutionException {
+        if (!sourceIconFile.exists()) {
+            throw new MojoExecutionException("Can't find source icon file: " + sourceIconFile.getAbsolutePath());
+        }
+
+        if (destinationIconFile.exists()) {
+            destinationIconFile.delete();
+        }
+
+        try {
+            FileUtils.copyFile(sourceIconFile, destinationIconFile);
         } catch (IOException ioException) {
             throw new MojoExecutionException("Can't copy icon to node package directory. Error messaage: " + ioException.getMessage());
         }
@@ -148,13 +191,17 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     }
 
     /**
-     * TODO: method under construction.
+     * Update plugin.xml file information.
+     *  - update catalogs information
+     *  - update nodes information
      *
-     * @param pluginXmlFile
-     * @param nodes
-     * @throws MojoExecutionException
+     * @param pluginXmlFile             - source plugin.xml file
+     * @param riNodes                   - RationalInsights nodes object
+     * @param generationResultsDir      - base package for generated node packages
+     *
+     * @throws MojoExecutionException   -
      */
-    private void updatePluginXml(File pluginXmlFile, List<Node> nodes) throws MojoExecutionException {
+    private void updatePluginXml(File pluginXmlFile, RINodes riNodes, File generationResultsDir) throws MojoExecutionException {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(KnimePlugin.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -165,35 +212,47 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
                 if (extension.isNodesExtension()) {
                     extension.setNodes(new ArrayList<>());
 
-                    for (Node node : nodes) {
+                    for (Node node : riNodes.getNodes()) {
                         KnimeNode knimeNode = new KnimeNode();
 
-                        knimeNode.setCategoryPath("/rationalinsights/" + node.getCatalog().toLowerCase() + "/");
+                        knimeNode.setCategoryPath("/rationalinsights/" + node.getParentCatalog().toLowerCase() + "/");
                         knimeNode.setFactoryClass("com.rationalinsights." + node.getName().toLowerCase() + "." + node.getName() + "Factory");
 
                         extension.addNode(knimeNode);
                     }
                 } else if (extension.isCatalogExtension()) {
-                    extension.getCategories().removeIf(category -> !category.getPath().equals("/"));
+                    extension.setCategories(new ArrayList<>());
 
-                    Map<String, Node> categoryNodesMap = new HashMap<>();
+                    File rootCatalogIconFile = new File(riNodes.getIcon());
+                    String rootCatalogIconFileName = rootCatalogIconFile.getName();
 
-                    for (Node node : nodes) {
-                        categoryNodesMap.put(node.getCatalog(), node);
-                    }
+                    copyIconFile(rootCatalogIconFile, new File(generationResultsDir, rootCatalogIconFileName));
 
-                    for (Map.Entry<String, Node> entry : categoryNodesMap.entrySet()) {
-                        String categoryName = entry.getKey();
+                    Category rootCategory = new Category();
 
-                        Category category = new Category();
+                    rootCategory.setDescription(riNodes.getDescription());
+                    rootCategory.setIcon("com/rationalinsights/" + rootCatalogIconFileName);
+                    rootCategory.setLevelId(riNodes.getName().toLowerCase());
+                    rootCategory.setName(riNodes.getName());
+                    rootCategory.setPath("/");
 
-                        category.setDescription("Empty for now");
-                        category.setIcon("com/rationalinsights/rationalinsights_icon.png");
-                        category.setLevelId(categoryName.toLowerCase());
-                        category.setName(categoryName);
-                        category.setPath("/rationalinsights");
+                    extension.addCategory(rootCategory);
 
-                        extension.addCategory(category);
+                    for (Catalog catalog : riNodes.getCatalogs()) {
+                        File categoryIconFile = new File(catalog.getIcon());
+                        String categoryIconFileName = categoryIconFile.getName();
+
+                        copyIconFile(categoryIconFile, new File(generationResultsDir, categoryIconFileName));
+
+                        Category subCategory = new Category();
+
+                        subCategory.setDescription(catalog.getDescription());
+                        subCategory.setIcon("com/rationalinsights/" + categoryIconFileName);
+                        subCategory.setLevelId(catalog.getName().toLowerCase());
+                        subCategory.setName(catalog.getName());
+                        subCategory.setPath("/rationalinsights");
+
+                        extension.addCategory(subCategory);
                     }
                 }
             }
@@ -486,7 +545,7 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @return List<Node>
      */
-    private List<Node> loadNodes() throws MojoExecutionException {
+    private RINodes loadRINodes() throws MojoExecutionException {
         if (Objects.isNull(nodesJsonPath)) {
             throw new MojoExecutionException("Can't find nodes.json");
         }
@@ -503,14 +562,38 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
             Gson gson = new GsonBuilder().create();
             JsonReader jsonReader = new JsonReader(new FileReader(nodesJsonFile));
 
-            Type listType = new TypeToken<ArrayList<Node>>(){}.getType();
-            List<Node> nodes = gson.fromJson(jsonReader, listType);
+            Type listType = new TypeToken<RINodes>(){}.getType();
+            RINodes riNodes = gson.fromJson(jsonReader, listType);
+
+            if (Objects.isNull(riNodes)) {
+                throw new MojoExecutionException("RI Nodes information is empty.");
+            }
+
+            List<Catalog> catalogs = riNodes.getCatalogs();
+
+            if (Objects.isNull(catalogs) || catalogs.size() == 0) {
+                throw new MojoExecutionException("Catalogs information is empty.");
+            }
+
+            List<Node> nodes = riNodes.getNodes();
 
             if (Objects.isNull(nodes) || nodes.size() == 0) {
                 throw new MojoExecutionException("Nodes information is empty.");
             }
 
-            return nodes;
+            List<String> catalogNames = catalogs.stream()
+                    .filter(Objects::nonNull)
+                    .map(Catalog::getName)
+                    .collect(toList());
+
+            for (Node node: nodes) {
+                if (!catalogNames.contains(node.getParentCatalog())) {
+                    throw new MojoExecutionException("Node  '" + node.getName()
+                            + "' reference to not existing parent catalog '" + node.getParentCatalog() + "'.");
+                }
+            }
+
+            return riNodes;
         } catch (FileNotFoundException exception) {
             throw new MojoExecutionException("Error on nodes.json file read. Error message: " + exception.getMessage());
         }

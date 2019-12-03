@@ -1,21 +1,12 @@
 package com.rationalinsights.generator.model;
 
 /**
- * Abstract Knime plugin node port handler.
+ * Basic UI Knime tree element with element name and icon.
  */
-public abstract class AbstractPort {
-
-    private int index;
+public abstract class AbstractTreeElement {
     private String name;
+    private String icon;
     private String description;
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
     public String getName() {
         return name;
@@ -23,6 +14,14 @@ public abstract class AbstractPort {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDescription() {

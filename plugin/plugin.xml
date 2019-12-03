@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <plugin>
     <extension point="org.knime.workbench.repository.categories">
-        <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="rationalinsights" name="Rational Insights" path="/"/>
-        <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="models" name="Models" path="/rationalinsights"/>
-        <category description="Empty for now" icon="com/rationalinsights/rationalinsights_icon.png" level-id="display" name="Display" path="/rationalinsights"/>
+        <category description="RationalInsights Python Nodes" icon="com/rationalinsights/python_icon_1.png" level-id="rationalinsights" name="RationalInsights" path="/"/>
+        <category description="RationalInsights Python Display Nodes" icon="com/rationalinsights/devops.png" level-id="display" name="Display" path="/rationalinsights"/>
+        <category description="RationalInsights Python Models Nodes" icon="com/rationalinsights/developer.png" level-id="models" name="Models" path="/rationalinsights"/>
     </extension>
     <extension point="org.knime.workbench.repository.nodes">
-        <node category-path="/rationalinsights/display/" factory-class="com.rationalinsights.pythonnode1.PythonNode1Factory"/>
-        <node category-path="/rationalinsights/models/" factory-class="com.rationalinsights.pythonnode2.PythonNode2Factory"/>
+        <node category-path="/rationalinsights/display/" factory-class="com.rationalinsights.twoinputtwooutputpythonnode.TwoInputTwoOutputPythonNodeFactory"/>
+        <node category-path="/rationalinsights/models/" factory-class="com.rationalinsights.oneinputoneoutputpythonnode.OneInputOneOutputPythonNodeFactory"/>
     </extension>
 </plugin>
