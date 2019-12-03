@@ -1,6 +1,6 @@
 {
   "name": "RationalInsights",
-  "icon": "./icons/python_icon_1.png",
+  "icon": "./icons/python_48_48.png",
   "description": "RationalInsights Python Nodes",
   "catalogs": [
     {
