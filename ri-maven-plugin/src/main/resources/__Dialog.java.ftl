@@ -1,4 +1,4 @@
-package com.rationalinsights.${nodePackageName};
+package com.${rootPackageName}.${nodePackageName};
 
 import org.knime.core.data.DataTableSpec;
 import org.knime.core.node.InvalidSettingsException;
@@ -13,7 +13,7 @@ import org.knime.core.node.port.PortObjectSpec;
 import nl.esciencecenter.e3dchem.python.PythonOptionsPanel;
 
 /**
- * <code>NodeDialog</code> for the "RationalInsightsPythonNodesExtension" Node.
+ * <code>NodeDialog</code> for the "${nodeName}PythonNodesExtension" Node.
  *
  * This node dialog derives from {@link DefaultNodeSettingsPane} which allows
  * creation of a simple dialog with standard components. If you need a more
@@ -25,7 +25,7 @@ public class ${nodeName}Dialog extends DefaultNodeSettingsPane {
 	${nodeName}Config config;
 
     /**
-     * New pane for configuring RationalInsightsPythonNodesExtension node dialog.
+     * New pane for configuring ${nodeName}PythonNodesExtension node dialog.
      * This is just a suggestion to demonstrate possible default dialog
      * components.
      */

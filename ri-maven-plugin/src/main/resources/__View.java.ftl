@@ -1,9 +1,9 @@
-package com.rationalinsights.${nodePackageName};
+package com.${rootPackageName}.${nodePackageName};
 
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeView</code> for the "RationalInsightsPythonNodesExtension" Node.
+ * <code>NodeView</code> for the "${nodeName}PythonNodesExtension" Node.
  *
  */
 public class ${nodeName}View extends NodeView<${nodeName}Model> {
@@ -11,7 +11,7 @@ public class ${nodeName}View extends NodeView<${nodeName}Model> {
     /**
      * Creates a new view.
      *
-     * @param nodeModel The model (class: {@link RationalInsightsPythonNodesExtension})
+     * @param nodeModel The model (class: {@link ${nodeName}PythonNodesExtension})
      */
     protected ${nodeName}View(final ${nodeName}Model nodeModel) {
         super(nodeModel);

@@ -1,4 +1,4 @@
-package com.rationalinsights.${nodePackageName};
+package com.${rootPackageName}.${nodePackageName};
 
 import org.knime.core.data.DataColumnSpecCreator;
 import org.knime.core.data.DataTableSpec;
@@ -14,7 +14,7 @@ import org.knime.core.node.NodeLogger;
 import nl.esciencecenter.e3dchem.python.PythonWrapperNodeModel;
 
 /**
- * This is the model implementation of RationalInsightsPythonNodesExtension.
+ * This is the model implementation of ${nodeName}PythonNodesExtension.
  *
  */
 public class ${nodeName}Model extends PythonWrapperNodeModel<${nodeName}Config> {

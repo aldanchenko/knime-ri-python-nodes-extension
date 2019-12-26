@@ -1,11 +1,11 @@
-package com.rationalinsights.${nodePackageName};
+package com.${rootPackageName}.${nodePackageName};
 
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 
 /**
- * <code>NodeFactory</code> for the "RationalInsightsPythonNodesExtension" Node.
+ * <code>NodeFactory</code> for the "${nodeName}PythonNodesExtension" Node.
  *
  */
 public class ${nodeName}Factory

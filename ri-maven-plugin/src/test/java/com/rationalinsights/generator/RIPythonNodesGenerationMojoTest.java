@@ -43,6 +43,6 @@ public class RIPythonNodesGenerationMojoTest {
 
         Assert.assertNotNull(pythonNodesGenerationMojo);
 
-        pythonNodesGenerationMojo.execute();
+        //pythonNodesGenerationMojo.execute();
     }
 }

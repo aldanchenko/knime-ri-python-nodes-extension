@@ -30,6 +30,8 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,6 +47,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     private static final String MODEL_JAVA_TEMPLATE_NAME = "__Model.java.ftl";
     private static final String VIEW_JAVA_TEMPLATE_NAME = "__View.java.ftl";
     private static final String FACTORY_XML_TEMPLATE_NAME = "__Factory.xml.ftl";
+    private static final String ACTIVATOR_JAVA_TEMPLATE_NAME = "__Activator.java.ftl";
+    private static final String FEATURE_XML_TEMPLATE_NAME = "__Feature.xml.ftl";
 
     @Parameter(property = "nodes.json.path", required = true)
     private String nodesJsonPath;
@@ -59,27 +63,48 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         Log log = getLog();
 
         log.info("Start generate Nodes.");
-        log.info("Base directory: " + new File("").getAbsolutePath());
+
+        File rootDirectory = new File("");
+
+        log.info("Base directory: " + rootDirectory.getAbsolutePath());
 
         RINodes riNodes = loadRINodes();
 
         File generationResultsDir = getGenerationResultsDirectory();
 
+        log.info("Generation results directory: " + generationResultsDir.getAbsolutePath());
+
         clearPreviousGeneratedPackages(generationResultsDir);
+
+        String rootPackageName = riNodes.getName().toLowerCase();
+
+        File rootPackageDir = new File(generationResultsDir, rootPackageName);
+
+        rootPackageDir.mkdir();
+
+        log.info("Root package directory: " + rootPackageDir.getAbsolutePath());
+
+        generateNodeActivatorJavaFile(rootPackageDir);
 
         File pluginXmlFile = getPluginXml();
 
-        updatePluginXml(pluginXmlFile, riNodes, generationResultsDir);
+        Category rootCategory = buildRootCategory(riNodes);
+
+        updatePluginXml(pluginXmlFile, riNodes, rootPackageDir, rootCategory, rootPackageName);
+
+        updatePluginManifest(rootDirectory, rootPackageName);
+
+        generateFeatureXmlFile(rootDirectory, rootPackageName);
 
         for (Node node : riNodes.getNodes()) {
-            File nodePackageDirectory = createNodePackageDirectory(generationResultsDir, node);
+            File nodePackageDirectory = createNodePackageDirectory(rootPackageDir, node);
 
-            generateNodeConfigJavaFile(node, nodePackageDirectory);
-            generateNodeDialogJavaFile(node, nodePackageDirectory);
-            generateNodeFactoryJavaFile(node, nodePackageDirectory);
-            generateNodeModelJavaFile(node, nodePackageDirectory);
-            generateNodeViewJavaFile(node, nodePackageDirectory);
-            generateNodeFactoryXmlFile(node, nodePackageDirectory);
+            generateNodeConfigJavaFile(node, nodePackageDirectory, rootPackageName);
+            generateNodeDialogJavaFile(node, nodePackageDirectory, rootPackageName);
+            generateNodeFactoryJavaFile(node, nodePackageDirectory, rootPackageName);
+            generateNodeModelJavaFile(node, nodePackageDirectory, rootPackageName);
+            generateNodeViewJavaFile(node, nodePackageDirectory, rootPackageName);
+            generateNodeFactoryXmlFile(node, nodePackageDirectory, rootPackageName);
 
             copyPythonFileToNodePackage(new File(node.getPythonScriptPath()), nodePackageDirectory);
             copyIconFileToNodePackage(new File(node.getIcon()), nodePackageDirectory);
@@ -89,15 +114,105 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
     }
 
     /**
+     * Generate feature/feature.xml file with plugin description.
+     *
+     * @param rootDirectory     - project root directory
+     * @param pluginName        - name of the plugin
+     */
+    private void generateFeatureXmlFile(File rootDirectory, String pluginName) throws MojoExecutionException {
+        getLog().info("Start generate Feature Xml File.");
+
+        File featureDirectory = new File(rootDirectory.getAbsolutePath()
+                + File.separator
+                + "/feature/");
+
+        if (!featureDirectory.exists()) {
+            throw new MojoExecutionException("Feature directory does not exists.");
+        }
+
+        File featureXmlFile = new File(featureDirectory, "feature.xml");
+
+        getLog().info("feature.xml: " + featureXmlFile.getAbsolutePath());
+
+        if (featureXmlFile.exists()) {
+            featureXmlFile.delete();
+        }
+
+        Map<String, Object> defaultTemplateParametersMap = new HashMap<>();
+        defaultTemplateParametersMap.put("pluginName", pluginName);
+
+        generateNodeFile(FEATURE_XML_TEMPLATE_NAME, "feature.xml",
+                defaultTemplateParametersMap,
+                featureDirectory);
+
+        getLog().info("End generate Feature Xml File.");
+    }
+
+    /**
+     * Update plugin MANIFEST.MF file.
+     *
+     * @param rootDirectory         - root directory for plugin project
+     * @param rootPackageName       - base package name for Activator class
+     *
+     * @throws MojoExecutionException -
+     */
+    private void updatePluginManifest(File rootDirectory, String rootPackageName) throws MojoExecutionException {
+        File pluginManifestFile = new File(rootDirectory.getAbsolutePath()
+                + File.separator
+                + "/plugin/META-INF/MANIFEST.MF");
+
+        getLog().info("MANIFEST.MF: " + pluginManifestFile.getAbsolutePath());
+
+        Manifest manifest;
+
+        try {
+            manifest = new Manifest(new FileInputStream(pluginManifestFile));
+
+            manifest.getMainAttributes().put(new Attributes.Name("Bundle-Activator"), "com." + rootPackageName + ".Activator");
+
+            manifest.write(new FileOutputStream(pluginManifestFile));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+
+            throw new MojoExecutionException("Can't read plugin MANIFEST.MF file: " + ioException.getMessage());
+        }
+    }
+
+    /**
+     * Generate Activator.java file and place to base package of plugin extension.
+     *
+     * @param rootPackageDir        - source root package of plugin
+     *
+     * @throws MojoExecutionException -
+     */
+    private void generateNodeActivatorJavaFile(File rootPackageDir) throws MojoExecutionException {
+        getLog().info("Start generate Node Activator Java File.");
+
+        Map<String, Object> templateParametersMap = new HashMap<>();
+
+        String name = rootPackageDir.getName();
+
+        templateParametersMap.put("rootPackageName", name);
+        templateParametersMap.put("pluginName", name);
+
+        generateNodeFile(ACTIVATOR_JAVA_TEMPLATE_NAME,
+                "Activator.java",
+                templateParametersMap,
+                rootPackageDir);
+
+        getLog().info("End generate Node Activator Java File.");
+    }
+
+    /**
      * Clear all previous generated packages which can remain as garbage if the node names have changed.
      *
      * @param generationResultsDir - result packages directory
      */
     private void clearPreviousGeneratedPackages(File generationResultsDir) {
         for (File file : Objects.requireNonNull(generationResultsDir.listFiles())) {
-            if (file.isDirectory()) {
-                file.delete();
-            }
+            getLog().info("Delete: " + file.getName());
+
+            file.delete();
         }
     }
 
@@ -199,9 +314,12 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      * @param riNodes                   - RationalInsights nodes object
      * @param generationResultsDir      - base package for generated node packages
      *
+     * @param rootCategory              - root category
+     * @param rootPackageName           - root package name
+     *
      * @throws MojoExecutionException   -
      */
-    private void updatePluginXml(File pluginXmlFile, RINodes riNodes, File generationResultsDir) throws MojoExecutionException {
+    private void updatePluginXml(File pluginXmlFile, RINodes riNodes, File generationResultsDir, Category rootCategory, String rootPackageName) throws MojoExecutionException {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(KnimePlugin.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -215,8 +333,8 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
                     for (Node node : riNodes.getNodes()) {
                         KnimeNode knimeNode = new KnimeNode();
 
-                        knimeNode.setCategoryPath("/rationalinsights/" + node.getParentCatalog().toLowerCase() + "/");
-                        knimeNode.setFactoryClass("com.rationalinsights." + node.getName().toLowerCase() + "." + node.getName() + "Factory");
+                        knimeNode.setCategoryPath("/" + rootPackageName + "/" + node.getParentCatalog().toLowerCase() + "/");
+                        knimeNode.setFactoryClass("com." + rootPackageName + "." + node.getName().toLowerCase() + "." + node.getName() + "Factory");
 
                         extension.addNode(knimeNode);
                     }
@@ -227,14 +345,6 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
                     String rootCatalogIconFileName = rootCatalogIconFile.getName();
 
                     copyIconFile(rootCatalogIconFile, new File(generationResultsDir, rootCatalogIconFileName));
-
-                    Category rootCategory = new Category();
-
-                    rootCategory.setDescription(riNodes.getDescription());
-                    rootCategory.setIcon("com/rationalinsights/" + rootCatalogIconFileName);
-                    rootCategory.setLevelId(riNodes.getName().toLowerCase());
-                    rootCategory.setName(riNodes.getName());
-                    rootCategory.setPath("/");
 
                     extension.addCategory(rootCategory);
 
@@ -247,10 +357,10 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
                         Category subCategory = new Category();
 
                         subCategory.setDescription(catalog.getDescription());
-                        subCategory.setIcon("com/rationalinsights/" + categoryIconFileName);
+                        subCategory.setIcon("com/" + rootPackageName + "/" + categoryIconFileName);
                         subCategory.setLevelId(catalog.getName().toLowerCase());
                         subCategory.setName(catalog.getName());
-                        subCategory.setPath("/rationalinsights");
+                        subCategory.setPath("/" + rootPackageName);
 
                         extension.addCategory(subCategory);
                     }
@@ -305,13 +415,14 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeFactoryXmlFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeFactoryXmlFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Xml File.");
 
-        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node, rootPackageName);
         defaultTemplateParametersMap.put("shortDescription", node.getShortDescription());
         defaultTemplateParametersMap.put("fullDescription", node.getFullDescription());
         defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
@@ -330,15 +441,16 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeViewJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeViewJavaFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node View Java File.");
 
         generateNodeFile(VIEW_JAVA_TEMPLATE_NAME,
                 node.getName() + "View.java",
-                getDefaultTemplateParametersMap(node),
+                getDefaultTemplateParametersMap(node, rootPackageName),
                 nodePackageDirectory);
 
         getLog().info("End generate Node View Java File.");
@@ -349,13 +461,14 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeModelJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeModelJavaFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node Model Java File.");
 
-        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node, rootPackageName);
 
         defaultTemplateParametersMap.put("pythonScript", new File(node.getPythonScriptPath()).getName());
         defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
@@ -374,15 +487,16 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeFactoryJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeFactoryJavaFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node Factory Java File.");
 
         generateNodeFile(FACTORY_JAVA_TEMPLATE_NAME,
                 node.getName() + "Factory.java",
-                getDefaultTemplateParametersMap(node),
+                getDefaultTemplateParametersMap(node, rootPackageName),
                 nodePackageDirectory);
 
         getLog().info("End generate Node Factory Java File.");
@@ -393,15 +507,16 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeDialogJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeDialogJavaFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node Dialog Java File.");
 
         generateNodeFile(DIALOG_JAVA_TEMPLATE_NAME,
                 node.getName() + "Dialog.java",
-                getDefaultTemplateParametersMap(node),
+                getDefaultTemplateParametersMap(node, rootPackageName),
                 nodePackageDirectory);
 
         getLog().info("End generate Node Dialog Java File.");
@@ -412,13 +527,14 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node                  - RI node
      * @param nodePackageDirectory  - destination package directory
+     * @param rootPackageName       - name of root package
      *
      * @throws MojoExecutionException -
      */
-    private void generateNodeConfigJavaFile(Node node, File nodePackageDirectory) throws MojoExecutionException {
+    private void generateNodeConfigJavaFile(Node node, File nodePackageDirectory, String rootPackageName) throws MojoExecutionException {
         getLog().info("Start generate Node Config Java File.");
 
-        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node);
+        Map<String, Object> defaultTemplateParametersMap = getDefaultTemplateParametersMap(node, rootPackageName);
         defaultTemplateParametersMap.put("inputPorts", node.getInputPorts());
         defaultTemplateParametersMap.put("outputPorts", node.getOutputPorts());
 
@@ -458,13 +574,15 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
      *
      * @param node - source RI node
      *
+     * @param rootPackageName
      * @return Map<String, Object>
      */
-    private Map<String, Object> getDefaultTemplateParametersMap(Node node) {
+    private Map<String, Object> getDefaultTemplateParametersMap(Node node, String rootPackageName) {
         Map<String, Object> templateParametersMap = new HashMap<>();
 
         templateParametersMap.put("nodeName", node.getName());
         templateParametersMap.put("nodePackageName", node.getName().toLowerCase());
+        templateParametersMap.put("rootPackageName", rootPackageName);
 
         return templateParametersMap;
     }
@@ -536,6 +654,30 @@ public class RIPythonNodesGenerationMojo extends AbstractMojo {
         }
 
         return template;
+    }
+
+    /**
+     * Build root category by {@link RINodes}
+     *
+     * @param riNodes - source data
+     *
+     * @return Category
+     */
+    private Category buildRootCategory(RINodes riNodes) {
+        File rootCatalogIconFile = new File(riNodes.getIcon());
+        String rootCatalogIconFileName = rootCatalogIconFile.getName();
+
+        Category rootCategory = new Category();
+
+        String rootPackageName = riNodes.getName().toLowerCase();
+
+        rootCategory.setDescription(riNodes.getDescription());
+        rootCategory.setIcon("com/" + rootPackageName + "/" + rootCatalogIconFileName);
+        rootCategory.setLevelId(riNodes.getName().toLowerCase());
+        rootCategory.setName(riNodes.getName());
+        rootCategory.setPath("/");
+
+        return rootCategory;
     }
 
     /**
