@@ -110,6 +110,7 @@ mvn clean package
 
 Steps to get the generated KNIME nodes extension inside KNIME:
 
+
 1. Goto Help > Install new software ... menu
 2. Press add button
 3. Fill text fields with url of update site which contains this node.
